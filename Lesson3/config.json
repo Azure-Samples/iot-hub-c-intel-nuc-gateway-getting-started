@@ -1,4 +1,4 @@
 {
-    "sensortagConfig" : "sensortag",
-    "azureConfig" : "azure"
+    "sensortag_config_postfix" : "sensortag",
+    "azure_config_postfix" : "azure"
 }
