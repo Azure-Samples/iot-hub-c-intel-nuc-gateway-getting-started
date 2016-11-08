@@ -3,7 +3,6 @@
  */
 'use strict';
 
-var execSync = require('child_process').execSync;
 var util = require('./lib/util.js');
 var bleConfig = require('./lib/bleconfig.js');
 
@@ -45,9 +44,8 @@ function parseArgv(argvs) {
       return;
     }
 
-    execSync('export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt');
-
     console.log('ble_gateway_hl successfully created. To run the sample, use following command:');
-    console.log('"cd ' + bleConfig.samplePath + '; ./' + bleConfig.sampleBinary + ' ' + stdout + '"');
+    console.log('"cd ' + bleConfig.samplePath + '; export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt; ./'
+      + bleConfig.sampleBinary + ' ' + stdout + '"');
   });
 })(process.argv.slice(2));

@@ -23,10 +23,17 @@ function createConfig(options, callback) {
   // choose the base file
   var sampleFile = options.forceUpdate ? defaultSampleConfig : path.join(samplePath, sampleConfig);
   var sample = readJSONFileSync(sampleFile);
-  var config = readJSONFileSync(configFile);
+  var config = readJSONFileSync(configFile, true);
 
   if (!sample.modules) {
-    callback('', 'No modules found in ' + sampleFile + ', you can run `node deploy.js --force` to reset your ' + sampleConfig);
+    if(options.forceUpdate) {
+      callback('', 'No modules found in ' + sampleFile + '.');
+    }else {
+      createConfig({
+        isLocal: options.isLocal,
+        forceUpdate: true
+      }, callback);
+    }
     return;
   }
 
@@ -41,7 +48,12 @@ function createConfig(options, callback) {
     callback('', 'No SensorTag module found in ' + sampleFile + ', you can run `node deploy.js --force` to reset your ' + sampleConfig);
     return;
   }
+
   sample.modules.removeModules('SensorTag');
+  // put the log file in each user's profile folder to avoid permission issue
+  sample.modules.updateModule('Logger', (obj) => {
+    obj.args['filename'] = path.join(process.cwd(), 'log-file.log');
+  });
   sample.modules.updateModule('mapping', (obj) => {
     obj.args = [];
   });
@@ -57,9 +69,9 @@ function createConfig(options, callback) {
     });
 
     var sensortagModule = sensortag.clone();
-    sensortagModule.args['controller_index'] = i;
     sensortagModule.args['device_mac_address'] = device.BLE_mac_address;
     if(i > 0) {
+      // if there is more than one sensortag, it should have a unique name and add the mapping
       var moduleName = 'SensorTag' + i;
       sensortagModule['module name'] = moduleName;
       sample.links.push({
@@ -112,12 +124,16 @@ Array.prototype.removeModules = function(moduleName) {
   }
 }
 
-function readJSONFileSync(filename) {
+function readJSONFileSync(filename, forceCheck) {
   try {
     return JSON.parse(fs.readFileSync(filename, 'utf8'));
   } catch (err) {
-    util.errorHandler(err);
-    return;
+    // once the forceCheck is set to true, it should be throw the error
+    if (forceCheck) {
+      util.errorHandler(err);
+    } else {
+      return {};
+    }
   }
 }
 
