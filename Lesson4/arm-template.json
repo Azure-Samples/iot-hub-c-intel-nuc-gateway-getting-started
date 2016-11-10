@@ -30,7 +30,7 @@
     "consumerGroupName": {
       "type": "string",
       "minLength": 3,
-      "defaultValue": "cg1",
+      "defaultValue": "cggateway",
       "metadata": {
         "description": "Name of device-to-cloud consumer group to provision on the IoT Hub instance."
       }
@@ -48,7 +48,8 @@
     "functionAppName": "[concat(parameters('resoucePrefix'), 'functionApp')]",
     "receiveDeviceMessagesFunction": "ReceiveDeviceMessages",
     "repoUrl": "https://github.com/Azure-Samples/iot-hub-c-intel-nuc-gateway-getting-started",
-    "branch": "master"
+    "branch": "master",
+    "consumerGroupResourceName": "[concat('events/ConsumerGroups/', parameters('consumerGroupName'))]"
   },
   "resources": [
     {
@@ -117,6 +118,7 @@
           "name": "[variables('receiveDeviceMessagesFunction')]",
           "type": "functions",
           "dependsOn": [
+            "[resourceId('Microsoft.Devices/iotHubs/eventhubEndpoints/ConsumerGroups', parameters('iotHubName'), 'events', parameters('consumerGroupName'))]",
             "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
             "[resourceId('Microsoft.Web/Sites/config', variables('functionAppName'), 'appsettings')]",
             "[resourceId('Microsoft.Web/Sites/sourcecontrols', variables('functionAppName'), 'web')]"
@@ -130,6 +132,7 @@
                   "type": "eventHubTrigger",
                   "path": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
                   "connection": "AzureIoTHubEventHubConnectionString",
+                  "consumerGroup": "[parameters('consumerGroupName')]",
                   "dataType": "binary"
                 },
                 {
