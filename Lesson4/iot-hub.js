@@ -5,13 +5,14 @@
 
 var EventHubClient = require('azure-event-hubs').Client;
 var blePrinter = require('./ble-message-printer.js');
+var moment = require('moment');
 var iotHubClient;
 
 /**
  * Read device-to-cloud messages from IoT Hub.
  * @param {object}  config - config object
  */
-var readIoTHub = function(config) {
+var readIoTHub = function(config, timeout) {
   // Receive device-to-cloud messages
   var printError = function(err) {
     console.log(err.message);
@@ -19,6 +20,19 @@ var readIoTHub = function(config) {
 
   // Only receive messages sent to IoT Hub after this point in time
   var startTime = Date.now() - 10000;
+
+  // Use 10 seconds for iotHubClient to bind partition
+  var timer = Date.now() + 10000;
+
+  timeout = timeout || 5000;
+  var interval = setInterval(() => {
+    if(Date.now() - timer >= timeout) {
+      console.log('[' + moment().format('YYYY:MM:DD[T]h:mm:ss') + '] No new trace in the past ' + timeout / 1000 + ' second(s)');
+      console.log('[' + moment().format('YYYY:MM:DD[T]h:mm:ss') + '] Stop reading from your IoT hub');
+      cleanup();
+      clearInterval(interval);
+    }
+  }, 1000);
 
   iotHubClient = EventHubClient.fromConnectionString(config.iot_hub_connection_string);
   iotHubClient.open()
@@ -29,9 +43,13 @@ var readIoTHub = function(config) {
           'startAfterTime': startTime
         })
         .then(function(receiver) {
-          receiver.on('errorReceived', printError);
+          receiver.on('errorReceived', (error) => {
+            printError(error);
+            timer = Date.now();
+          });
           receiver.on('message', (message) => {
-            blePrinter('IoT hub', message.body)
+            blePrinter('IoT hub', message.body);
+            timer = Date.now();
           });
         });
       });
