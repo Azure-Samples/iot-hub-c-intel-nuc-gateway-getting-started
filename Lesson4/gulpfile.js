@@ -39,7 +39,7 @@ function initTasks(gulp) {
   var config = gulp.config;
 
   gulp.task('read', 'Read message from Azure cloud.', () => {
-    var isRead = false; 
+    var isRead = false;
     if(args['iot-hub']) {
       isRead = true;
       require('./iot-hub.js').readIoTHub(config);
