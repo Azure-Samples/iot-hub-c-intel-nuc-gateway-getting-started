@@ -3,8 +3,8 @@
  */
 'use strict';
 
-// This function is triggered each time a message is revieved in the IoTHub.
-// The message payload is persisted in an Azure Storage Table
+// This function is triggered whenever a message is arrived at IoT Hub
+// The message payload is persisted in Azure Storage Table
 var moment = require('moment');
 
 module.exports = function (context, iotHubMessage) {

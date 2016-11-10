@@ -7,15 +7,15 @@ var bluetoothctl = require('./lib/bluetoothctl.js');
 var util = require('./lib/util.js');
 
 (function(mac) {
-  // the bluetootchctl can only support upper case
+  // the bluetootchctl only supports upper case
   mac = (mac + '').toUpperCase();
-  // check whether the mac address is the correct one
+  // check whether the mac address is correct
   if (!valid(mac)) {
     usage();
     return;
   }
 
-  // Step1. init the bluetoothctl
+  // Step1. init bluetoothctl
   var initPromise = new Promise((resolve, reject) => {
     bluetoothctl.init((stdout, error) => {
       if (error) {
@@ -26,7 +26,7 @@ var util = require('./lib/util.js');
     });
   });
 
-  // Step2. try to connect the device
+  // Step2. try connect to the device
   initPromise.catch(util.errorHandler);
   var connectPromise = initPromise.then(() => {
     return new Promise((resolve, reject) => {
@@ -40,12 +40,12 @@ var util = require('./lib/util.js');
     });
   });
 
-  // if success, exit
+  // if succeed, exit
   connectPromise.then(connectSuccess).then(() => {
     process.exit();
   });
 
-  // if failed, scan 3 seconds and retry.
+  // if fail, scan for another 3 seconds and retry.
   connectPromise.catch(() => {
     return new Promise((resolve, reject) => {
       bluetoothctl.scan(3000, (error) => {

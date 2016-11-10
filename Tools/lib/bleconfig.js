@@ -71,7 +71,7 @@ function createConfig(options, callback) {
     var sensortagModule = sensortag.clone();
     sensortagModule.args['device_mac_address'] = device.BLE_mac_address;
     if(i > 0) {
-      // if there is more than one sensortag, it should have a unique name and add the mapping
+      // if there are more than one sensortags, it should have a unique name and add the mapping
       var moduleName = 'SensorTag' + i;
       sensortagModule['module name'] = moduleName;
       sample.links.push({
@@ -128,7 +128,7 @@ function readJSONFileSync(filename, forceCheck) {
   try {
     return JSON.parse(fs.readFileSync(filename, 'utf8'));
   } catch (err) {
-    // once the forceCheck is set to true, it should be throw the error
+    // once the forceCheck is set to true, it should throw the error
     if (forceCheck) {
       util.errorHandler(err);
     } else {

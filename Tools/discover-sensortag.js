@@ -38,7 +38,7 @@ function filter(line) {
   }
 
   function isSensorTagBLE(device) {
-    // alias should case sensetive equal to CC2650 SensorTag, and ManufacturerData Key should be 0x0d
+    // alias should be case sensetive e.g. CC2650 SensorTag, and ManufacturerData Key should be 0x0d
     return device['Alias'] && device['Alias'].indexOf('SensorTag') >= 0
       && device['ManufacturerData Key'] && /^0x[0]*d$/.test(device['ManufacturerData Key'].toLowerCase())
       && device['UUID'] && device['UUID'].indexOf('0000-1000-8000-00805f9b34fb') >= 0;
@@ -76,7 +76,7 @@ function getDevices() {
     }
 
     // show title line
-    // add all information into the title part, let show() to choose which to show up.
+    // put all information into the title and let show() to choose what to show
     show({
       'Mac': 'Mac Address',
       'Name': 'Device Name',
@@ -118,13 +118,13 @@ function scanPromiseCreator(timeout) {
       }
     });
   })
-  // Step2. Scan 5 seconds to look for BLE devices
+  // Step2. Scan on for 5 seconds to look for BLE devices
   .then(() => {
     return scanPromiseCreator(1000);
   }).then(() => {
     return scanPromiseCreator(timeout);
   })
-  // Step3. Get BLE devices information and show it out
+  // Step3. Display BLE devices information
   .then(() => {
     setTimeout(function() {
       getDevices();

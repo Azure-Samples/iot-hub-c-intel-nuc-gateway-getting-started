@@ -9,7 +9,7 @@ var bleConfig = require('./lib/bleconfig.js');
 var util = require('./lib/util.js');
 
 function run(configPath) {
-  // change to directory
+  // change directory
   process.chdir(bleConfig.samplePath);
   // set crt
   // export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
@@ -35,9 +35,8 @@ function run(configPath) {
 }
 
 (function() {
-  // Step1. check binary exist
+  // Step1. check if binary exists
   new Promise((resolve, reject) => {
-    // check exits
     var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
     fs.exists(binaryPath, (exists) => {
       if (!exists) {
@@ -47,7 +46,7 @@ function run(configPath) {
       }
     });
   })
-  // Step2. deploy device
+  // Step2. deploy the device
   .then(() => {
     return new Promise((resolve, reject) => {
       bleConfig.create({}, (stdout, error) => {
@@ -59,6 +58,6 @@ function run(configPath) {
       })
     });
   })
-  // Step3. run sample
+  // Step3. run the sample
   .then(run).catch(util.errorHandler);
 })();
