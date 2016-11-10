@@ -12,7 +12,7 @@ var stopReadAzureTable = false;
  * Read messages from Azure Table.
  * @param {object}  config - config object
  */
-var readAzureTable = function(config) {
+var readAzureTable = function(config, timeout) {
   var tableService = storage.createTableService(config.azure_storage_connection_string);
   var timestamp = moment.utc().format('hhmmssSSS');
 
@@ -43,6 +43,7 @@ var readAzureTable = function(config) {
             timestamp = result.entries[i].RowKey['_'];
           }
         }
+        timer = Date.now();
       }
       if (!stopReadAzureTable) {
         readNewMessages();
@@ -50,6 +51,18 @@ var readAzureTable = function(config) {
     });
   }
 
+  // Use 10 seconds for iotHubClient to bind partition
+  var timer = Date.now() + 10000;
+
+  timeout = timeout || 5000;
+  var interval = setInterval(() => {
+    if(Date.now() - timer >= timeout) {
+      console.log('[' + moment().format('YYYY:MM:DD[T]h:mm:ss') + '] No new trace in the past ' + timeout / 1000 + ' second(s)');
+      console.log('[' + moment().format('YYYY:MM:DD[T]h:mm:ss') + '] Stop reading from your IoT hub');
+      cleanup();
+      clearInterval(interval);
+    }
+  }, 1000);
   readNewMessages();
 }
 

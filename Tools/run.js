@@ -8,7 +8,7 @@ var spawn = require('child_process').spawn;
 var bleConfig = require('./lib/bleconfig.js');
 var util = require('./lib/util.js');
 
-function run(configPath) {
+function run(configPath, timeout) {
   // change directory
   process.chdir(bleConfig.samplePath);
   // set crt
@@ -29,12 +29,18 @@ function run(configPath) {
       isTerminate = true;
     }
   }
+
+  setTimeout(() => {
+    ps.kill('SIGTERM');
+  }, timeout);
+
   process.on('SIGINT', terminate);
   process.on('SIGTERM', terminate);
   process.on('exit', terminate);
 }
 
-(function() {
+(function(timeout) {
+  timeout = timeout || 40000;
   // Step1. check if binary exists
   new Promise((resolve, reject) => {
     var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
@@ -59,5 +65,8 @@ function run(configPath) {
     });
   })
   // Step3. run the sample
-  .then(run).catch(util.errorHandler);
-})();
+  .then((configPath) => {
+    run(configPath, timeout);
+  })
+  .catch(util.errorHandler);
+})(process.argv[2]);
