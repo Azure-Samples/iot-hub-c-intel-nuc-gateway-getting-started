@@ -1,29 +1,29 @@
 # iot hub c intel nuc gateway getting started
-This repo contains the source code to help you run the azure-iot-gateway-sdk BLE sample on Intel NUC with SensorTag. And you can also create an azure function to receive message which is sent from BLE sample.
+This repo contains the sample codes to help you run the azure-iot-gateway-sdk BLE sample application on Intel NUC with TI SensorTag. There are also sample codes for reading messages directly from IoT Hub as well as Azure table storage where IoT Hub messages were persisted by Azure function.
 
 <!--
-Should put publish link here
+Placeholder for published GW Happy Path Tutorial
 -->
 
-## Using these scripts, you can:
-* Discovery the availiable sensortag devices
-* Test the connectivity of sensortag device
-* Run BLE sample on the NUC
+## The following scripts will help you:
+* Device discovery of sensortag devices
+* Test the connectivity of sensortag devices
+* Run the BLE sample application on Intel NUC
 * Receive messages from your IoT hub
 * Receive messages from your Azure Table storage
 
 ## File hierarchy
 ``` txt
 .
-|- Tools/                        // Tools run on your Gateway machine
+|- Tools/                        // These scripts will run on Intel NUC
 |- Lesson3/
-|  |- iot-hub.js                 // Nodejs sample code read from an IoT hub
-|  |- ble-message-printer.js     // Printer for BLE sample application's raw data
+|  |- iot-hub.js                 // Sample script for reading messages from IoT Hub
+|  |- ble-message-printer.js     // Sample script for automation of BLE sample application's data decoder and printer
 |- Lesson4/
-|  |- ReceiveDeviceMessages/     // Azure Functions sample code
-|  |- arm-template.json          // Azure Resource Manager template that contains an Azure Functions and a storage account
+|  |- ReceiveDeviceMessages/     // Azure Function sample code
+|  |- arm-template.json          // Azure Resource Manager template that has definitation of Azure Function app and storage account
 |  |- arm-template-param.json    // Configuration file used by the Azure Resource Manager template
-|  |- azure-table.js             // Nodejs sample code read from Azure Table storage
+|  |- azure-table.js             // Sample code for reading from Azure Table storage
 ```
 
 ## Starter Kit

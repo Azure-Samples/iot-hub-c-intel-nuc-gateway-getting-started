@@ -28,7 +28,7 @@ function init(callback) {
   });
 }
 
-// turn on the scan and scan the BLE devices
+// scan BLE devices
 function scanDevice(timeout, callback) {
   cli.run([{
     operation: 'power on'

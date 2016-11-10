@@ -33,7 +33,7 @@ var readAzureTable = function(config) {
         return;
       }
 
-      // result.entries contains entities matching the query
+      // result.entries contain entities matching the query
       if (result.entries.length > 0) {
         for (var i = 0; i < result.entries.length; i++) {
           blePrinter('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'));

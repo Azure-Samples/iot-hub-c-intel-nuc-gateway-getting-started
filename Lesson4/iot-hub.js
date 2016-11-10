@@ -12,12 +12,12 @@ var iotHubClient;
  * @param {object}  config - config object
  */
 var readIoTHub = function(config) {
-  // Listen device-to-cloud messages
+  // Receive device-to-cloud messages
   var printError = function(err) {
     console.log(err.message);
   };
 
-  // Only receive messages sent to IoT Hub after this time.
+  // Only receive messages sent to IoT Hub after this point in time
   var startTime = Date.now() - 10000;
 
   iotHubClient = EventHubClient.fromConnectionString(config.iot_hub_connection_string);

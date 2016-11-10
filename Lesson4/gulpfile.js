@@ -19,15 +19,15 @@ function initTasks(gulp) {
         'device_password': 'root',
       },
       'sensortag-config': {
-        'IoT_hub_name': '[IoT hub name]',
+        'IoT_hub_name': '[IoT Hub name]',
         'IoT_hub_suffix': 'azure-devices.net',
         'devices': [{
           'iot_device_connection_string': '[IoT device connection string]',
-          'BLE_mac_address': '[SensorTag mac Address]'
+          'BLE_mac_address': '[SensorTag mac address]'
         }]
       },
       'azure-config': {
-        'iot_hub_connection_string': '[IoT hub connection string]',
+        'iot_hub_connection_string': '[IoT Hub connection string]',
         'iot_device_connection_string': '[IoT device connection string]',
         'azure_storage_connection_string': '[Azure storage connection string]',
         'iot_hub_consumer_group_name': 'cg1'
@@ -54,7 +54,7 @@ function initTasks(gulp) {
     }
   }, {
     options: {
-      'iot-hub': 'Read messages from your IoT hub.',
+      'iot-hub': 'Read messages from your IoT Hub.',
       'table-storage': 'Read messages from your Azure Table storage.'
     }
   })
