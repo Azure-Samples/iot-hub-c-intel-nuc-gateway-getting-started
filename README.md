@@ -6,7 +6,7 @@ Placeholder for published GW Happy Path Tutorial
 -->
 
 ## The following scripts will help you:
-* Device discovery of sensortag devices
+* Device discovery for sensortag devices
 * Test the connectivity of sensortag devices
 * Run the BLE sample application on Intel NUC
 * Receive messages from your IoT hub
