@@ -17,6 +17,7 @@ function initTasks(gulp) {
         'device_host_name_or_ip_address': '[device hostname or IP address]',
         'device_user_name': 'root',
         'device_password': 'root',
+        'ssh_port': 22
       },
       'sensortag-config': {
         'IoT_hub_name': '[IoT Hub name]',
