@@ -41,32 +41,36 @@ function run(configPath, timeout) {
 
 (function(timeout) {
   timeout = timeout || 40000;
-  // Step1. check if binary exists
-  new Promise((resolve, reject) => {
-    var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
-    fs.exists(binaryPath, (exists) => {
-      if (!exists) {
-        reject(binaryPath + ' not found');
-      } else {
-        resolve();
-      }
-    });
-  })
-  // Step2. deploy the device
-  .then(() => {
-    return new Promise((resolve, reject) => {
+  // Step1. Preparation
+  Promise.all([
+    // check binary exists
+    new Promise((resolve, reject) => {
+      var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
+      fs.exists(binaryPath, (exists) => {
+        if (!exists) {
+          reject(binaryPath + ' not found');
+        } else {
+          resolve();
+        }
+      });
+    }),
+    // create config
+    new Promise((resolve, reject) => {
       bleConfig.create({}, (stdout, error) => {
         if (error) {
           reject(error);
         } else {
           resolve(stdout);
         }
-      })
-    });
-  })
-  // Step3. run the sample
-  .then((configPath) => {
-    run(configPath, timeout);
+      });
+    })
+  ])
+  // Step2. run the sample
+  .then((results) => {
+    var configPath = results[1];
+    if (configPath) {
+      run(configPath, timeout);
+    }
   })
   .catch(util.errorHandler);
 })(process.argv[2]);
