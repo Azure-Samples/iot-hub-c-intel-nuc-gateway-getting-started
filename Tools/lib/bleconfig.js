@@ -48,6 +48,15 @@ function createConfig(options, callback) {
     return;
   }
 
+  // update the instruction's read_periodic
+  var instructions = sensortag.args.instructions;
+  for(var i = 0; i < instructions.length; i++) {
+    var instruction = instructions[i];
+    if(instruction.type === 'read_periodic') {
+      instruction['interval_in_ms'] = 2000;
+    }
+  }
+
   sample.modules.removeModules('SensorTag');
   // put the log file in each user's profile folder to avoid permission issue
   sample.modules.updateModule('Logger', (obj) => {
