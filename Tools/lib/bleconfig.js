@@ -4,14 +4,13 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs');
 var util = require('./util.js');
 
-const configFile = 'config.json';
-const defaultSampleConfig = '.ble_gateway.json';
-const samplePath = '/usr/share/azureiotgatewaysdk/samples/ble_gateway_hl/';
-const sampleBinary = 'ble_gateway_hl';
-const sampleConfig = 'ble_gateway.json';
+const CONFIG_FILE = 'config.json';
+const DEFAULT_SAMPLE_CONFIG = '.ble_gateway.json';
+const SAMPLE_PATH = '/usr/share/azureiotgatewaysdk/samples/ble_gateway_hl/';
+const SAMPLE_BINARY = 'ble_gateway_hl';
+const SAMPLE_CONFIG = 'ble_gateway.json';
 
 function createConfig(options, callback) {
   // set default option
@@ -21,9 +20,9 @@ function createConfig(options, callback) {
   }, options);
 
   // choose the base file
-  var sampleFile = options.forceUpdate ? defaultSampleConfig : path.join(samplePath, sampleConfig);
-  var sample = readJSONFileSync(sampleFile);
-  var config = readJSONFileSync(configFile, true);
+  var sampleFile = options.forceUpdate ? DEFAULT_SAMPLE_CONFIG : path.join(SAMPLE_PATH, SAMPLE_CONFIG);
+  var sample = util.readJSONFileSync(sampleFile);
+  var config = util.readJSONFileSync(CONFIG_FILE, true);
 
   if (!sample.modules) {
     if(options.forceUpdate) {
@@ -45,7 +44,7 @@ function createConfig(options, callback) {
   // the sensortag can be mutilple parts, and all of them should map in the mapping module
   var sensortag = sample.modules.findModule('SensorTag');
   if (!sensortag) {
-    callback('', 'No SensorTag module found in ' + sampleFile + ', you can run `node deploy.js --force` to reset your ' + sampleConfig);
+    callback('', 'No SensorTag module found in ' + sampleFile + ', you can run `node deploy.js --force` to reset your ' + SAMPLE_CONFIG);
     return;
   }
 
@@ -68,7 +67,7 @@ function createConfig(options, callback) {
       });
     });
 
-    var sensortagModule = sensortag.clone();
+    var sensortagModule = util.clone(sensortag);
     sensortagModule.args['device_mac_address'] = device.BLE_mac_address;
     if(i > 0) {
       // if there are more than one sensortags, it should have a unique name and add the mapping
@@ -88,8 +87,8 @@ function createConfig(options, callback) {
     sample.modules.addModule(sensortagModule);
   }
 
-  var dstFile = options.isLocal ? sampleConfig : path.join(samplePath, sampleConfig);
-  saveJSONFileSync(sample, dstFile);
+  var dstFile = options.isLocal ? SAMPLE_CONFIG : path.join(SAMPLE_PATH, SAMPLE_CONFIG);
+  util.saveJSONFileSync(sample, dstFile);
   callback(path.join(process.cwd(), dstFile));
 }
 
@@ -124,34 +123,10 @@ Array.prototype.removeModules = function(moduleName) {
   }
 }
 
-function readJSONFileSync(filename, forceCheck) {
-  try {
-    return JSON.parse(fs.readFileSync(filename, 'utf8'));
-  } catch (err) {
-    // once the forceCheck is set to true, it should throw the error
-    if (forceCheck) {
-      util.errorHandler(err);
-    } else {
-      return {};
-    }
-  }
-}
-
-function saveJSONFileSync(obj, filename) {
-  try {
-    fs.writeFileSync(filename, JSON.stringify(obj, null, 4));
-  } catch (error) {
-    util.errorHandler(error);
-  }
-}
-
-Object.prototype.clone = function() {
-  return JSON.parse(JSON.stringify(this));
-}
-
 module.exports = {
   create: createConfig,
-  samplePath: samplePath,
-  sampleBinary: sampleBinary,
-  sampleConfig: sampleConfig
+  configFile: CONFIG_FILE,
+  samplePath: SAMPLE_PATH,
+  sampleBinary: SAMPLE_BINARY,
+  sampleConfig: SAMPLE_CONFIG
 };
