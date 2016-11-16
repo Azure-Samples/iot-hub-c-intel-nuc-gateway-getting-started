@@ -65,7 +65,7 @@ function createConfig(options, callback) {
   sample.modules.updateModule('mapping', (obj) => {
     obj.args = [];
   });
-  for (var i = 0; i < config.devices.length; i++) {
+  for (i = 0; i < config.devices.length; i++) {
     var device = config.devices[i];
     var connection = util.resolveDeviceConnectionString(device.iot_device_connection_string);
     sample.modules.updateModule('mapping', (obj) => {

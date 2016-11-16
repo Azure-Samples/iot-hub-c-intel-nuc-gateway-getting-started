@@ -39,7 +39,7 @@ function initTasks(gulp) {
 
   var iotHubReader;
   gulp.task('read', false, () => {
-    if(args['iot-hub']) {
+    if (args['iot-hub']) {
       iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string);
       iotHubReader.startReadMessage(config.iot_hub_consumer_group_name);
     }
@@ -47,14 +47,14 @@ function initTasks(gulp) {
 
   // stop the iotHubReader
   gulp.task('stop-read', false, () => {
-    if(iotHubReader) {
+    if (iotHubReader) {
       iotHubReader.stopReadMessage();
     }
   });
 
   // start run-internal task, and stop-read after the run-internal finished
   gulp.task('send-device-to-cloud-messages', false, () => {
-      require('run-sequence').use(gulp)('run-internal', 'stop-read');
+    require('run-sequence').use(gulp)('run-internal', 'stop-read');
   });
 
   // override run task

@@ -8,9 +8,9 @@ var storage = require('azure-storage');
 var blePrinter = require('./ble-message-printer.js');
 
 // Read messages from Azure Table.
-function readNewMessages(tableName, startTime) {
+var readNewMessages = function (tableName, startTime) {
   // terminate condition: stop once the reading flag is false
-  if(!this.reading) {
+  if (!this.reading) {
     return;
   }
 
@@ -20,12 +20,12 @@ function readNewMessages(tableName, startTime) {
   this.tableService.queryEntities(tableName, query, null, function(error, result) {
     if (error) {
       if (error.statusCode && error.statusCode == 404) {
-        // if 404 error, no more try        
+        // if 404 error, no more try
         console.error(
           '[Azure Table] ERROR: Table not found. Something might be wrong. Please go to troubleshooting page for more information.')
       } else {
         console.error('[Azure Table] ERROR:\n' + error);
-        readNewMessages(tableName, startTime);        
+        readNewMessages(tableName, startTime);
       }
       return;
     }
@@ -44,20 +44,20 @@ function readNewMessages(tableName, startTime) {
       }
     }
 
-    readNewMessages(tableName, startTime);    
+    readNewMessages(tableName, startTime);
   });
 }
 
 
 // set read flag to true, and run into readNewMessages loop
-AzureTableReaderClient.prototype.startReadMessage = function (tableName) {
+AzureTableReaderClient.prototype.startReadMessage = function(tableName) {
   this.reading = true;
   var startTime = moment.utc().format('hhmmssSSS');
   readNewMessages(tableName, startTime);
 }
 
 // set read flag to false, then the readNewMessages will stop
-AzureTableReaderClient.prototype.stopReadMessage = function () {
+AzureTableReaderClient.prototype.stopReadMessage = function() {
   this.reading = false;
 }
 

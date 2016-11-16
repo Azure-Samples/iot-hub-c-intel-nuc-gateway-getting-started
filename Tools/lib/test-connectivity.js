@@ -24,7 +24,7 @@ module.exports = function(mac, onSucceed, onFailed) {
   }
 
   // Step1. init bluetoothctl
-  var promise = new Promise((resolve, reject) => {
+  new Promise((resolve, reject) => {
     bluetoothctl.init((stdout, error) => {
       if (error) {
         reject(error);
@@ -34,7 +34,7 @@ module.exports = function(mac, onSucceed, onFailed) {
     });
   })
   .then(() => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve/*, reject*/) => {
       connect(mac, onSucceed, resolve);
     });
   })

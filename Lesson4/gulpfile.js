@@ -45,12 +45,12 @@ function initTasks(gulp) {
   var iotHubReader;
   var tableReader;
   gulp.task('read', false, () => {
-    if(args['iot-hub']) {
+    if (args['iot-hub']) {
       iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string);
       iotHubReader.startReadMessage(config.iot_hub_consumer_group_name);
     }
 
-    if(args['table-storage']) {
+    if (args['table-storage']) {
       tableReader = new azureTableReaderClient(config.azure_storage_connection_string);
       tableReader.startReadMessage('DeviceData');
     }
@@ -58,18 +58,18 @@ function initTasks(gulp) {
 
   // stop the iotHubReader
   gulp.task('stop-read', false, () => {
-    if(iotHubReader) {
+    if (iotHubReader) {
       iotHubReader.stopReadMessage();
     }
 
-    if(tableReader) {
+    if (tableReader) {
       tableReader.stopReadMessage();
     }
   });
 
   // start run-internal task, and stop-read after the run-internal finished
   gulp.task('send-device-to-cloud-messages', false, () => {
-      require('run-sequence').use(gulp)('run-internal', 'stop-read');
+    require('run-sequence').use(gulp)('run-internal', 'stop-read');
   });
 
   // override run task

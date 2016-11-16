@@ -42,24 +42,24 @@ function run(configPath, timeout) {
 
 function testDevicesConnectivities(devices, allSuccess, onceFail) {
   var promises = [];
-  for(var i = 0; i < devices.length; i++) {
+  for (var i = 0; i < devices.length; i++) {
     var mac = devices[i]['BLE_mac_address'];
     promises.push(new Promise((resolve, reject) => {
       console.log('Testing connectivity of ' + mac);
-      testConnectivity(mac, (mac)=>{
+      testConnectivity(mac, (mac) => {
         console.log(mac + ' can be successfully connected');
         resolve(mac);
-      }, (mac)=>{
+      }, (mac) => {
         reject(mac + ' cannot be connected now');
       });
     }));
   }
 
   Promise.all(promises)
-  .then((results) => {
-    allSuccess();
-  })
-  .catch(onceFail);
+    .then(() => {
+      allSuccess();
+    })
+    .catch(onceFail);
 }
 
 (function(timeout) {
@@ -90,9 +90,9 @@ function testDevicesConnectivities(devices, allSuccess, onceFail) {
     // test connectivity
     new Promise((resolve, reject) => {
       var devices = util.readJSONFileSync(bleConfig.configFile).devices;
-      if(!devices) {
+      if (!devices) {
         reject('No devices provided');
-      }else {
+      } else {
         testDevicesConnectivities(devices, resolve, reject);
       }
     })
@@ -102,7 +102,7 @@ function testDevicesConnectivities(devices, allSuccess, onceFail) {
     var configPath = results[1];
     if (configPath) {
       // wait 2 seconds for all BLE process is already exit
-      setTimeout(()=> {
+      setTimeout(() => {
         run(configPath, timeout);
       }, 2000)
     }
