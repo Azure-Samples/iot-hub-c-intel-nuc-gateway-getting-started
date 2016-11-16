@@ -6,7 +6,16 @@
 var bluetoothctl = require('./bluetoothctl.js');
 var util = require('./util.js');
 
-module.exports = function(mac, connectSuccess, connectFail) {
+// try to connect a device
+// if succeed
+// then
+//   return
+// else
+//   scan
+//   connect again
+//   return
+// done
+module.exports = function(mac, onSucceed, onFailed) {
   // the bluetootchctl only supports upper case
   mac = (mac + '').toUpperCase();
   // check whether the mac address is correct
@@ -15,7 +24,7 @@ module.exports = function(mac, connectSuccess, connectFail) {
   }
 
   // Step1. init bluetoothctl
-  var initPromise = new Promise((resolve, reject) => {
+  var promise = new Promise((resolve, reject) => {
     bluetoothctl.init((stdout, error) => {
       if (error) {
         reject(error);
@@ -23,30 +32,13 @@ module.exports = function(mac, connectSuccess, connectFail) {
         resolve();
       }
     });
-  });
-
-  // Step2. try connect to the device
-  initPromise.catch(util.errorHandler);
-  var connectPromise = initPromise.then(() => {
+  })
+  .then(() => {
     return new Promise((resolve, reject) => {
-      connect(mac, util.errorHandler, (isConnected) => {
-        if (isConnected) {
-          resolve(mac);
-        } else {
-          reject(mac);
-        }
-      });
+      connect(mac, onSucceed, resolve);
     });
-  });
-
-  // if succeed, exit
-  connectPromise.then((mac) => {
-    connectSuccess(mac);
-    return null;
-  });
-
-  // if fail, scan for another 3 seconds and retry.
-  connectPromise.catch(() => {
+  })
+  .then(() => {
     return new Promise((resolve, reject) => {
       bluetoothctl.scan(3000, (error) => {
         if (error) {
@@ -58,29 +50,21 @@ module.exports = function(mac, connectSuccess, connectFail) {
     });
   })
   .then(() => {
-    connect(mac, util.errorHandler, (isConnected) => {
-      if (isConnected) {
-        connectSuccess(mac);
-      } else {
-        connectFail(mac);
-      }
-    })
+    connect(mac, onSucceed, onFailed);
   })
-  .catch(util.errorHandler)
+  .catch(util.errorHandler);
 }
 
-function connect(mac, errorCallback, callback) {
+function connect(mac, onSucceed, onFailed) {
   function isConnected(message) {
     return message.indexOf('Connection successful') >= 0;
   }
 
   bluetoothctl.connect(mac, (stdout, error) => {
-    if (error) {
-      errorCallback(error);
-    } else if (isConnected(stdout)) {
-      callback(true);
+    if (error || !isConnected(stdout)) {
+      onFailed(mac);
     } else {
-      callback(false);
+      onSucceed(mac);
     }
   });
 }
