@@ -4,7 +4,7 @@
 'use strict';
 
 var testConnectivity = require('./lib/test-connectivity.js');
-var util = require('./util.js');
+var util = require('./lib/util.js');
 
 (function(mac) {
   try {
@@ -25,6 +25,7 @@ function connectFail(mac) {
 
 function connectSuccess(mac) {
   console.log(mac + ' can be successfully connected.');
+  process.exit();
 }
 
 function usage() {

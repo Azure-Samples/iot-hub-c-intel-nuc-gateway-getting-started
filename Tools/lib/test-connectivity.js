@@ -40,9 +40,7 @@ module.exports = function(mac, connectSuccess, connectFail) {
   });
 
   // if succeed, exit
-  connectPromise.then(connectSuccess).then(() => {
-    process.exit();
-  });
+  connectPromise.then(connectSuccess);
 
   // if fail, scan for another 3 seconds and retry.
   connectPromise.catch(() => {
