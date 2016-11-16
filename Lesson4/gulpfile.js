@@ -3,8 +3,11 @@
  */
 'use strict';
 
-var gulp = require('gulp');
 var args = require('get-gulp-args')();
+var gulp = require('gulp');
+
+var azureTableReaderClient = require('./azure-table.js');
+var iotHubReaderClient = require('./iot-hub.js');
 
 function initTasks(gulp) {
   /**
@@ -39,26 +42,43 @@ function initTasks(gulp) {
 
   var config = gulp.config;
 
-  gulp.task('read', 'Read message from Azure cloud.', () => {
-    var isRead = false;
+  var iotHubReader;
+  var tableReader;
+  gulp.task('read', false, () => {
     if(args['iot-hub']) {
-      isRead = true;
-      require('./iot-hub.js').readIoTHub(config);
-    }
-    if (args['table-storage']) {
-      isRead = true;
-      require('./azure-table.js').readAzureTable(config);
+      iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string);
+      iotHubReader.startReadMessage(config.iot_hub_consumer_group_name);
     }
 
-    if(!isRead) {
-      console.error('gulp read --iot-hub OR gulp read --table-storage');
-    }
-  }, {
-    options: {
-      'iot-hub': 'Read messages from your IoT Hub.',
-      'table-storage': 'Read messages from your Azure Table storage.'
+    if(args['table-storage']) {
+      tableReader = new azureTableReaderClient(config.azure_storage_connection_string);
+      tableReader.startReadMessage('DeviceData');
     }
   })
+
+  // stop the iotHubReader
+  gulp.task('stop-read', false, () => {
+    if(iotHubReader) {
+      iotHubReader.stopReadMessage();
+    }
+
+    if(tableReader) {
+      tableReader.stopReadMessage();
+    }
+  });
+
+  // start run-internal task, and stop-read after the run-internal finished
+  gulp.task('send-device-to-cloud-messages', false, () => {
+      require('run-sequence').use(gulp)('run-internal', 'stop-read');
+  });
+
+  // override run task
+  gulp.task('run', 'Run the BLE sample application in the Gateway SDK.', ['read', 'send-device-to-cloud-messages'], null, {
+    options: {
+      'iot-hub': '[OPTIONAL] Read messages from your IoT Hub.',
+      'table-storage': '[OPTIONAL] Read messages from your Azure Table storage.'
+    }
+  });
 }
 
 initTasks(gulp);
