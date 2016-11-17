@@ -69,8 +69,11 @@ function connectDevice(mac, callback) {
   }, {
     operation: 'connect ' + mac
   }, {
-    operation: 'disconnect ' + mac,
+    operation: 'list-attributes ' + mac,
     timeout: 1500
+  }, {
+    operation: 'disconnect ' + mac,
+    timeout: 1000
   }, {
     operation: 'exit',
     timeout: 500
