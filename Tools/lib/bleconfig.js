@@ -96,12 +96,12 @@ function createConfig(options, callback) {
         'source': moduleName,
         'sink': 'mapping'
       }, {
-          'source': moduleName,
-          'sink': 'BLE Printer'
-        }, {
-          'source': 'BLEC2D',
-          'sink': moduleName
-        });
+        'source': moduleName,
+        'sink': 'BLE Printer'
+      }, {
+        'source': 'BLEC2D',
+        'sink': moduleName
+      });
     }
     sample.modules.addModule(sensortagModule);
   }
