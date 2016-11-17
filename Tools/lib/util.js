@@ -3,6 +3,8 @@
  */
 'use strict';
 
+var fs = require('fs');
+
 function rpad(str, size) {
   str = str + '';
   if (str.length >= size) {
@@ -44,9 +46,37 @@ function tokenize(src) {
   return result;
 }
 
+function readJSONFileSync(filename, forceCheck) {
+  try {
+    return JSON.parse(fs.readFileSync(filename, 'utf8'));
+  } catch (err) {
+    // once the forceCheck is set to true, it should throw the error
+    if (forceCheck) {
+      errorHandler(err);
+    } else {
+      return {};
+    }
+  }
+}
+
+function saveJSONFileSync(obj, filename) {
+  try {
+    fs.writeFileSync(filename, JSON.stringify(obj, null, 2));
+  } catch (error) {
+    errorHandler(error);
+  }
+}
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 module.exports = {
   rpad: rpad,
   errorHandler: errorHandler,
   eachLine: eachLine,
-  resolveDeviceConnectionString: resolveDeviceConnectionString
+  resolveDeviceConnectionString: resolveDeviceConnectionString,
+  readJSONFileSync: readJSONFileSync,
+  saveJSONFileSync: saveJSONFileSync,
+  clone: clone
 }

@@ -6,6 +6,7 @@
 var fs = require('fs');
 var spawn = require('child_process').spawn;
 var bleConfig = require('./lib/bleconfig.js');
+var testConnectivity = require('./lib/test-connectivity.js');
 var util = require('./lib/util.js');
 
 function run(configPath, timeout) {
@@ -39,34 +40,72 @@ function run(configPath, timeout) {
   process.on('exit', terminate);
 }
 
+function testDevicesConnectivities(devices, allSuccess, onceFail) {
+  var promises = [];
+  for (var i = 0; i < devices.length; i++) {
+    var mac = devices[i]['BLE_mac_address'];
+    promises.push(new Promise((resolve, reject) => {
+      console.log('Testing connectivity of ' + mac);
+      testConnectivity(mac, (mac) => {
+        console.log(mac + ' can be successfully connected');
+        resolve(mac);
+      }, (mac) => {
+        reject(mac + ' cannot be connected now');
+      });
+    }));
+  }
+
+  Promise.all(promises)
+    .then(() => {
+      allSuccess();
+    })
+    .catch(onceFail);
+}
+
 (function(timeout) {
   timeout = timeout || 40000;
-  // Step1. check if binary exists
-  new Promise((resolve, reject) => {
-    var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
-    fs.exists(binaryPath, (exists) => {
-      if (!exists) {
-        reject(binaryPath + ' not found');
-      } else {
-        resolve();
-      }
-    });
-  })
-  // Step2. deploy the device
-  .then(() => {
-    return new Promise((resolve, reject) => {
+  // Step1. Preparation
+  Promise.all([
+    // check binary exists
+    new Promise((resolve, reject) => {
+      var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
+      fs.exists(binaryPath, (exists) => {
+        if (!exists) {
+          reject(binaryPath + ' not found');
+        } else {
+          resolve();
+        }
+      });
+    }),
+    // create config
+    new Promise((resolve, reject) => {
       bleConfig.create({}, (stdout, error) => {
         if (error) {
           reject(error);
         } else {
           resolve(stdout);
         }
-      })
-    });
-  })
-  // Step3. run the sample
-  .then((configPath) => {
-    run(configPath, timeout);
+      });
+    }),
+    // test connectivity
+    new Promise((resolve, reject) => {
+      var devices = util.readJSONFileSync(bleConfig.configFile).devices;
+      if (!devices) {
+        reject('No devices provided');
+      } else {
+        testDevicesConnectivities(devices, resolve, reject);
+      }
+    })
+  ])
+  // Step2. run the sample
+  .then((results) => {
+    var configPath = results[1];
+    if (configPath) {
+      // wait 2 seconds for all BLE process is already exit
+      setTimeout(() => {
+        run(configPath, timeout);
+      }, 2000)
+    }
   })
   .catch(util.errorHandler);
 })(process.argv[2]);

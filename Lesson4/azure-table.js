@@ -6,72 +6,64 @@
 var moment = require('moment');
 var storage = require('azure-storage');
 var blePrinter = require('./ble-message-printer.js');
-var stopReadAzureTable = false;
 
-/**
- * Read messages from Azure Table.
- * @param {object}  config - config object
- */
-var readAzureTable = function(config, timeout) {
-  var tableService = storage.createTableService(config.azure_storage_connection_string);
-  var timestamp = moment.utc().format('hhmmssSSS');
-
-  var readNewMessages = function() {
-    var tableName = 'DeviceData';
-    var condition = 'PartitionKey eq ? and RowKey gt ? ';
-    // Only query messages that're no later than the current time
-    var query = new storage.TableQuery().where(condition, moment.utc().format('YYYYMMDD'), timestamp);
-    tableService.queryEntities(tableName, query, null, function(error, result) {
-      if (error) {
-        if (error.statusCode && error.statusCode == 404) {
-          console.error(
-            '[Azure Table] ERROR: Table not found. Something might be wrong. Please go to troubleshooting page for more information.')
-        } else {
-          console.error('[Azure Table] ERROR:\n' + error);
-        }
-        readNewMessages();
-        return;
-      }
-
-      // result.entries contain entities matching the query
-      if (result.entries.length > 0) {
-        for (var i = 0; i < result.entries.length; i++) {
-          blePrinter('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'));
-
-          // Update timestamp so that we don't get old messages
-          if (result.entries[i].RowKey['_'] > timestamp) {
-            timestamp = result.entries[i].RowKey['_'];
-          }
-        }
-        timer = Date.now();
-      }
-      if (!stopReadAzureTable) {
-        readNewMessages();
-      }
-    });
+// Read messages from Azure Table.
+var readNewMessages = function (tableName, startTime) {
+  // terminate condition: stop once the reading flag is false
+  if (!this.reading) {
+    return;
   }
 
-  // Use 10 seconds for iotHubClient to bind partition
-  var timer = Date.now() + 10000;
-
-  timeout = timeout || 5000;
-  var interval = setInterval(() => {
-    if(Date.now() - timer >= timeout) {
-      console.log('[' + moment().format('YYYY:MM:DD[T]h:mm:ss') + '] No new trace in the past ' + timeout / 1000 + ' second(s)');
-      console.log('[' + moment().format('YYYY:MM:DD[T]h:mm:ss') + '] Stop reading from your IoT hub');
-      cleanup();
-      clearInterval(interval);
+  var condition = 'PartitionKey eq ? and RowKey gt ? ';
+  // only query messages that're no later than the current time
+  var query = new storage.TableQuery().where(condition, moment.utc().format('YYYYMMDD'), startTime);
+  this.tableService.queryEntities(tableName, query, null, function(error, result) {
+    if (error) {
+      if (error.statusCode && error.statusCode == 404) {
+        // if 404 error, no more try
+        console.error(
+          '[Azure Table] ERROR: Table not found. Something might be wrong. Please go to troubleshooting page for more information.')
+      } else {
+        console.error('[Azure Table] ERROR:\n' + error);
+        readNewMessages(tableName, startTime);
+      }
+      return;
     }
-  }, 1000);
-  readNewMessages();
+
+    // result.entries contain entities matching the query
+    if (result.entries.length === 0) {
+      readNewMessages(tableName, startTime);
+      return;
+    }
+    for (var i = 0; i < result.entries.length; i++) {
+      blePrinter('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'));
+
+      // update startTime so that we don't get old messages
+      if (result.entries[i].RowKey['_'] > startTime) {
+        startTime = result.entries[i].RowKey['_'];
+      }
+    }
+
+    readNewMessages(tableName, startTime);
+  });
 }
 
-/**
- * Set stopReadAzureTable flag to true.
- */
-var cleanup = function() {
-  stopReadAzureTable = true;
+
+// set read flag to true, and run into readNewMessages loop
+AzureTableReaderClient.prototype.startReadMessage = function(tableName) {
+  this.reading = true;
+  var startTime = moment.utc().format('hhmmssSSS');
+  readNewMessages(tableName, startTime);
 }
 
-module.exports.readAzureTable = readAzureTable;
-module.exports.cleanup = cleanup;
+// set read flag to false, then the readNewMessages will stop
+AzureTableReaderClient.prototype.stopReadMessage = function() {
+  this.reading = false;
+}
+
+function AzureTableReaderClient(connectionString) {
+  this.tableService = storage.createTableService(connectionString);
+  readNewMessages = readNewMessages.bind(this);
+}
+
+module.exports = AzureTableReaderClient;
