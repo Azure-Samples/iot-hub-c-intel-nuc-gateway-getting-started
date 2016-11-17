@@ -50,7 +50,7 @@ function testDevicesConnectivities(devices, allSuccess, onceFail) {
         console.log(mac + ' can be successfully connected');
         resolve(mac);
       }, (mac) => {
-        reject(mac + ' cannot be connected now');
+        reject(mac + ' cannot be connected now. \r\nPlease make sure you already power on your SensorTag.');
       });
     }));
   }

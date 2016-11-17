@@ -27,7 +27,7 @@ IoTHubReaderClient.prototype.startReadMessage = function(consumerGroupName) {
         .then(function(receiver) {
           receiver.on('errorReceived', printError);
           receiver.on('message', (message) => {
-            blePrinter('IoT hub', message.body);
+            blePrinter('IoT hub', message.body, Date.parse(message.systemProperties['x-opt-enqueued-ime']));
           });
         });
       }.bind(this));
