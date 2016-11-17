@@ -36,7 +36,7 @@ var readNewMessages = function (tableName, startTime) {
       return;
     }
     for (var i = 0; i < result.entries.length; i++) {
-      blePrinter('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'));
+      blePrinter('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'), result.entries[i].Timestamp['_']);
 
       // update startTime so that we don't get old messages
       if (result.entries[i].RowKey['_'] > startTime) {
