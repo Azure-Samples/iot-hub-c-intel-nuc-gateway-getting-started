@@ -29,7 +29,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    code ~/.iot-hub-getting-started/config-gateway.json
    ```
 4. **`gulp install-tools`** - Install necessary tools on the gateway.
-  - Copy files in the `/app` folder on the gateway
+  - Copy files in the `/Tools` folder to your gateway
 5. **`gulp discover-sensortag`** - Device discovery for TI SensorTag. Run after "install-tools".
 6. **`gulp test-connectivity --mac <mac>`** - Test connectivity of the SensorTag. Run after "install-tools" and "discover-sensortag".
 7. Get the registered IoT Hub device connection string and edit IoT Hub name, device connection string and SensorTag mac address in config-sensortag.json.
@@ -43,9 +43,8 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-sensortag.json
    ```
-8. **`gulp run`** - Configure and run the BLE sample application.
-9. *Start another console to do the following steps to read message from IoT Hub.*
-   Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
+8. **`gulp run`** - Configure and run the BLE sample application. This application will terminate itself after 40 seconds.
+9. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
    # Get IoT hub connection string
    az iot hub show-connection-string --name {my hub name} --resource-group {resource group name}
@@ -59,4 +58,4 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-azure.json
    ```
-10. **`gulp read --iot-hub`** - this reads IoT Hub messages that have just been sent from SensorTag.
+10. **`gulp run --iot-hub`** - Run the BLE sample application and reads IoT Hub messages that have just been sent from SensorTag.
