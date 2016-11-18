@@ -5,8 +5,8 @@
     "iotHubName": {
       "value": "[your IoT Hub name]"
     },
-    "resoucePrefix": {
-      "value": "[prefix string for new resources]"
+    "resourcePrefix": {
+      "value": "iot"
     },
     "functionSku": {
       "value": "Free"

@@ -8,7 +8,7 @@
         "description": "The name of your IoT Hub"
       }
     },
-    "resoucePrefix": {
+    "resourcePrefix": {
       "type": "string",
       "metadata": {
         "description": "The string to prefix the services names"
@@ -39,13 +39,13 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "storageVersion": "2015-06-15",
-    "storageName": "[concat(parameters('resoucePrefix'), 'storage')]",
+    "storageName": "[toLower(take(concat(parameters('resourcePrefix'), 'storage', uniquestring(resourceGroup().id)), 24))]",
     "storageAccountSku": "Standard_LRS",
     "iotHubVersion": "2016-02-03",
     "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
     "iotHubKeyName": "iothubowner",
     "iotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName'))]",
-    "functionAppName": "[concat(parameters('resoucePrefix'), 'functionApp')]",
+    "functionAppName": "[toLower(concat(parameters('resourcePrefix'), 'func', uniquestring(resourceGroup().id)))]",
     "receiveDeviceMessagesFunction": "ReceiveDeviceMessages",
     "repoUrl": "https://github.com/Azure-Samples/iot-hub-c-intel-nuc-gateway-getting-started",
     "branch": "master",
