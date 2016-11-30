@@ -1,0 +1,5 @@
+{
+    "sensortag_config_postfix" : "sensortag",
+    "azure_config_postfix" : "azure",
+    "has_sensortag": true
+}

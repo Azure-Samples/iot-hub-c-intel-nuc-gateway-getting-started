@@ -22,8 +22,7 @@ function initTasks(gulp) {
         'IoT_hub_name': '[IoT Hub name]',
         'IoT_hub_suffix': 'azure-devices.net',
         'devices': [{
-          'iot_device_connection_string': '[IoT device connection string]',
-          'BLE_mac_address': '[SensorTag mac address]'
+          'iot_device_connection_string': '[IoT device connection string]'
         }]
       },
       'azure-config': {
@@ -40,7 +39,7 @@ function initTasks(gulp) {
   var iotHubReader;
   gulp.task('read', false, () => {
     if (args['iot-hub']) {
-      iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string);
+      iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string, config.has_sensortag);
       iotHubReader.startReadMessage(config.iot_hub_consumer_group_name);
     }
   })
