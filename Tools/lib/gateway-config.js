@@ -3,7 +3,6 @@
  */
 'use strict';
 
-var path = require('path');
 var util = require('./util.js');
 
 // load the raw config

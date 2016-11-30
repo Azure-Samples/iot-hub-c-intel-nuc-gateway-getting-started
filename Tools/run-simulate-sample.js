@@ -3,7 +3,6 @@
  */
 'use strict';
 
-var fs = require('fs');
 var spawn = require('child_process').spawn;
 var simulateConfig = require('./lib/simulate-config.js');
 var util = require('./lib/util.js');
@@ -15,7 +14,9 @@ function run(configPath, timeout) {
   // export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
   process.env['SSL_CERT_FILE'] = '/etc/ssl/certs/ca-certificates.crt';
   // run sample
-  var ps = spawn('./' + simulateConfig.sampleBinary, [configPath], ['pipe', process.stdout, process.stderr]);
+  var ps = spawn('./' + simulateConfig.sampleBinary, [configPath], {
+    stdio: ['pipe', 'ignore', process.stderr]
+  });
 
   var isTerminate = false;
 
