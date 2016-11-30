@@ -16,14 +16,21 @@ Placeholder for published GW Happy Path Tutorial
 ``` txt
 .
 |- Tools/                        // These scripts will run on Intel NUC
-|- Lesson3/
-|  |- iot-hub.js                 // Sample script for reading messages from IoT Hub
-|  |- ble-message-printer.js     // Sample script for automation of BLE sample application's data decoder and printer
-|- Lesson4/
-|  |- ReceiveDeviceMessages/     // Azure Function sample code
-|  |- arm-template.json          // Azure Resource Manager template that has definitation of Azure Function app and storage account
-|  |- arm-template-param.json    // Configuration file used by the Azure Resource Manager template
-|  |- azure-table.js             // Sample code for reading from Azure Table storage
+|  |- lib/                       // Libraries will be used by scripts on Intel NUC
+|      |- ble-config.js          // Create ble_gateway sample config with user config
+|      |- bluetoothctl.js        // Interact with bluetoothctl shell 
+|      |- gateway-config.js      // Base methods to create gateway sample config with user config
+|      |- interactcli.js         // Base methods to Interact with shell process
+|      |- simudev-config.js      // Create simulate_device_cloud_upload sample config with user config
+|      |- test-connectivity.js   // Test a MAC address' connectivity
+|      |- util.js                // Utilities
+|  |- deploy.js                  // Create sample config
+|  |- discover-sensortag.js      // Discover availiable sensortag
+|  |- run-ble-sample.js          // Create ble_gateway config and run the sample for 40 seconds
+|  |- run-simudev-sample.js      // Create simulate_device_cloud_upload config and run the sample for 40 seconds
+|  |- test-connectivity.js       // Test a MAC address' connectivity and show user the result
+|- Lesson3/                      // Lesson3: Send messages to and read messages from IoT hub
+|- Lesson4/                      // Lesson4: Save messages to the Azure storage
 ```
 
 ## Starter Kit

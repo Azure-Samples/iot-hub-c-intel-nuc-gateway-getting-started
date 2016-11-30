@@ -46,12 +46,12 @@ function initTasks(gulp) {
   var tableReader;
   gulp.task('read', false, () => {
     if (args['iot-hub']) {
-      iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string);
+      iotHubReader = new iotHubReaderClient(config.iot_hub_connection_string, config.has_sensortag);
       iotHubReader.startReadMessage(config.iot_hub_consumer_group_name);
     }
 
     if (args['table-storage']) {
-      tableReader = new azureTableReaderClient(config.azure_storage_connection_string);
+      tableReader = new azureTableReaderClient(config.azure_storage_connection_string, config.has_sensortag);
       tableReader.startReadMessage('DeviceData');
     }
   })

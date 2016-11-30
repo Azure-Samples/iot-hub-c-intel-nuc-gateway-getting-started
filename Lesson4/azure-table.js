@@ -5,7 +5,6 @@
 
 var moment = require('moment');
 var storage = require('azure-storage');
-var blePrinter = require('./ble-message-printer.js');
 
 // Read messages from Azure Table.
 var readNewMessages = function (tableName, startTime) {
@@ -36,7 +35,7 @@ var readNewMessages = function (tableName, startTime) {
       return;
     }
     for (var i = 0; i < result.entries.length; i++) {
-      blePrinter('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'), result.entries[i].Timestamp['_']);
+      this.printer('Azure Table', Buffer.from(result.entries[i].message['_'], 'base64'), result.entries[i].Timestamp['_']);
 
       // update startTime so that we don't get old messages
       if (result.entries[i].RowKey['_'] > startTime) {
@@ -45,7 +44,7 @@ var readNewMessages = function (tableName, startTime) {
     }
 
     readNewMessages(tableName, startTime);
-  });
+  }.bind(this));
 }
 
 
@@ -61,8 +60,9 @@ AzureTableReaderClient.prototype.stopReadMessage = function() {
   this.reading = false;
 }
 
-function AzureTableReaderClient(connectionString) {
+function AzureTableReaderClient(connectionString, isBLEPrinter) {
   this.tableService = storage.createTableService(connectionString);
+  this.printer = isBLEPrinter ? require('./ble-message-printer.js') : require('./simulate-message-printer.js');
   readNewMessages = readNewMessages.bind(this);
 }
 

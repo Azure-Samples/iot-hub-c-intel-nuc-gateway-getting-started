@@ -4,7 +4,6 @@
 'use strict';
 
 var EventHubClient = require('azure-event-hubs').Client;
-var blePrinter = require('./ble-message-printer.js');
 
 // Close connection to IoT Hub.
 IoTHubReaderClient.prototype.stopReadMessage = function() {
@@ -27,16 +26,17 @@ IoTHubReaderClient.prototype.startReadMessage = function(consumerGroupName) {
         .then(function(receiver) {
           receiver.on('errorReceived', printError);
           receiver.on('message', (message) => {
-            blePrinter('IoT hub', message.body, Date.parse(message.systemProperties['x-opt-enqueued-ime']));
+            this.printer('IoT hub', message.body, Date.parse(message.systemProperties['x-opt-enqueued-ime']));
           });
-        });
+        }.bind(this));
       }.bind(this));
     }.bind(this))
     .catch(printError);
 }
 
-function IoTHubReaderClient(connectionString) {
+function IoTHubReaderClient(connectionString, isBLEPrinter) {
   this.iotHubClient = EventHubClient.fromConnectionString(connectionString);
+  this.printer = isBLEPrinter ? require('./ble-message-printer.js') : require('./simulate-message-printer.js');
 }
 
 module.exports = IoTHubReaderClient;
