@@ -5,7 +5,7 @@
 
 var fs = require('fs');
 var spawn = require('child_process').spawn;
-var bleConfig = require('./lib/bleconfig.js');
+var bleConfig = require('./lib/ble-config.js');
 var testConnectivity = require('./lib/test-connectivity.js');
 var util = require('./lib/util.js');
 
