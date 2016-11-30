@@ -4,12 +4,12 @@
 'use strict';
 
 var util = require('./lib/util.js');
-var bleConfig = require('./lib/bleconfig.js');
 
 function usage() {
   console.log('usage: node deploy.js [option]');
   console.log('option:');
-  console.log(util.rpad('', 4), util.rpad('-g, --global', 16), 'update ' + bleConfig.samplePath + bleConfig.sampleConfig);
+  console.log(util.rpad('', 4), util.rpad('--sample=[ble/simulate]'), 'specific the sample type');
+  console.log(util.rpad('', 4), util.rpad('-g, --global', 16), 'update config in your sample path rather than ' + process.cwd());
   console.log(util.rpad('', 4), util.rpad('-f, --force', 16), 'force reset the ble_gateway.json to default value');
 }
 
@@ -22,6 +22,13 @@ function parseArgv(argvs) {
       options['isLocal'] = false;
     } else if (argv === '-f' || argv === '--force') {
       options['forceUpdate'] = true;
+    } else if (argv.startsWith('--sample=')) {
+      var type = argv.slice('--sample='.length);
+      if (type === 'ble' || type === 'simulate') {
+        options['type'] = type;
+      } else {
+        throw ('Unknown sample type ' + type);
+      }
     } else {
       throw ('Unknown argument ' + argv);
     }
@@ -38,14 +45,25 @@ function parseArgv(argvs) {
     return;
   }
 
-  bleConfig.create(options, (stdout, error) => {
+  var config;
+  if (options.type === 'ble') {
+    config = require('./lib/ble-config.js');
+  } else if(options.type === 'simulate') {
+    config = require('./lib/simulate-config.js');
+  } else {
+    console.error('Missing sample type');
+    usage();
+    return;
+  }
+
+  config.create(options, (stdout, error) => {
     if (error) {
       util.errorHandler(error);
       return;
     }
 
-    console.log('ble_gateway_hl successfully created. To run the sample, use following command:');
-    console.log('"cd ' + bleConfig.samplePath + '; export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt; ./'
-      + bleConfig.sampleBinary + ' ' + stdout + '"');
+    console.log(stdout + ' successfully created. To run the sample, use following command:');
+    console.log('"cd ' + config.samplePath + '; export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt; ./'
+      + config.sampleBinary + ' ' + stdout + '"');
   });
 })(process.argv.slice(2));
