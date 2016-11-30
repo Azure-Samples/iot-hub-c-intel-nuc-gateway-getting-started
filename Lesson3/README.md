@@ -43,7 +43,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-sensortag.json
    ```
-8. **`gulp run`** - Configure and run the BLE sample application. This application will terminate itself after 40 seconds.
+8. **`gulp run`** - Configure and run the BLE sample application. This application will exit in 40 seconds.
 9. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
    # Get IoT hub connection string
@@ -58,7 +58,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-azure.json
    ```
-10. **`gulp run --iot-hub`** - Run the BLE sample application and reads IoT Hub messages that have just been sent from SensorTag.
+10. **`gulp run --iot-hub`** - Run the BLE sample application and read IoT Hub messages that have just been sent from SensorTag.
 
 ## Deploy and run simulate device sample
 1. Use the following command to modify your configuration, change the `"has_sensortag"` value from `true` to `false`
@@ -88,7 +88,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-sensortag.json
    ```
-7. **`gulp run`** - Configure and run the BLE sample application. This application will terminate itself after 40 seconds.
+7. **`gulp run`** - Configure and run the BLE sample application. This application will exit in 40 seconds.
 8. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
    # Get IoT hub connection string
@@ -103,4 +103,4 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-azure.json
    ```
-9. **`gulp run --iot-hub`** - Run the BLE sample application and reads IoT Hub messages that have just been sent from SensorTag.
+9. **`gulp run --iot-hub`** - Run the BLE sample application and read IoT Hub messages that have just been sent from SensorTag.

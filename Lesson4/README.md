@@ -37,6 +37,6 @@ Please follow the [Lesson 4: Save messages to the cloud and read them from the c
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-azure.json
    ```
-4. **`gulp run`** - Configure and run the BLE sample application. This application will terminate itself after 40 seconds.
-   **`gulp run --iot-hub`** - Run the BLE sample application and reads IoT Hub messages that have just been sent from SensorTag.
-   **`gulp read --table-storage`** - Run the BLE sample application and reads IoT Hub messages that have been persisted in Azure Table storage.
+4. **`gulp run`** - Configure and run the BLE sample application. This application will exit in 40 seconds.
+   **`gulp run --iot-hub`** - Run the BLE sample application and read IoT Hub messages that have just been sent from SensorTag.
+   **`gulp read --table-storage`** - Run the BLE sample application and read IoT Hub messages that have been persisted in Azure Table storage.
