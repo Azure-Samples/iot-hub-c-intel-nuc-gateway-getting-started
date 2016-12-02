@@ -5,12 +5,17 @@ This repo contains the sample codes to help you run the azure-iot-gateway-sdk BL
 Placeholder for published GW Happy Path Tutorial
 -->
 
-## The following scripts will help you:
+## The following scripts will help you
 * Device discovery for sensortag devices
 * Test the connectivity of sensortag devices
 * Run the BLE sample application on Intel NUC
 * Receive messages from your IoT hub
 * Receive messages from your Azure Table storage
+
+## What you need
+* Set up your Intel NUC as an IoT gateway (Lesson [Set up Intel NUC as an IoT gateway](#))
+* Install Nessary tools on your host machine (Lesson [Get the tools](#))
+* Create your Azure IoT hub and register a logical device (Lesson [Create your Azure IoT hub and register SensorTag](#))
 
 ## File hierarchy
 ``` txt
@@ -18,7 +23,7 @@ Placeholder for published GW Happy Path Tutorial
 |- Tools/                        // These scripts will run on Intel NUC
 |  |- lib/                       // Libraries will be used by scripts on Intel NUC
 |      |- ble-config.js          // Create ble_gateway sample config with user config
-|      |- bluetoothctl.js        // Interact with bluetoothctl shell 
+|      |- bluetoothctl.js        // Interact with bluetoothctl shell
 |      |- gateway-config.js      // Base methods to create gateway sample config with user config
 |      |- interactcli.js         // Base methods to Interact with shell process
 |      |- simudev-config.js      // Create simulate_device_cloud_upload sample config with user config
