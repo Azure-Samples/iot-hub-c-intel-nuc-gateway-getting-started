@@ -4,7 +4,7 @@
 'use strict';
 
 var spawn = require('child_process').spawn;
-var simulateConfig = require('./lib/simulate-config.js');
+var simulateConfig = require('./lib/simudev-config.js');
 var util = require('./lib/util.js');
 
 function run(configPath, timeout) {
