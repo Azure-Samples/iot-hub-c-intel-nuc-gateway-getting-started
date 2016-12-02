@@ -97,7 +97,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-sensortag.json
    ```
-7. **`gulp run`** - Configure and run the simulate device cloud upload sample application. This application will exit in 40 seconds.
+<!-- 7. **`gulp run`** - Configure and run the simulate device cloud upload sample application. This application will exit in 40 seconds. -->
 8. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
    # Get IoT hub connection string
