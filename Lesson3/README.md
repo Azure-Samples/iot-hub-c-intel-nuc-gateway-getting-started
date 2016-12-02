@@ -66,6 +66,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
 
 ## <a id="run-simudev"></a>Deploy and run simulate device cloud upload sample
 1. Use the following command to modify your configuration, change the `"has_sensortag"` value from `true` to `false`.
+
    ```bash
    code ../config.json
    ```
