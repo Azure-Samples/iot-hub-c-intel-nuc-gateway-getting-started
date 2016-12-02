@@ -49,7 +49,7 @@ function parseArgv(argvs) {
   if (options.type === 'ble') {
     config = require('./lib/ble-config.js');
   } else if(options.type === 'simulate') {
-    config = require('./lib/simulate-config.js');
+    config = require('./lib/simudev-config.js');
   } else {
     console.error('Missing sample type');
     usage();
