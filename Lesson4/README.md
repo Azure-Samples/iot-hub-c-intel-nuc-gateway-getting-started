@@ -48,6 +48,7 @@ You should first create an azure storage account, and create your Azure Function
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-azure.json
    ```
-4. **`gulp run`** - Configure and run the gateway sample application. This application will exit in 40 seconds.
-   **`gulp run --iot-hub`** - Run the gateway sample application and read IoT Hub messages that have just been sent from your gateway sample application.
-   **`gulp run --table-storage`** - Run the gateway sample application and read IoT Hub messages that have been persisted in Azure Table storage.
+4. Run the sample application and read message from cloud
+   * **`gulp run`** - Configure and run the gateway sample application. This application will exit in 40 seconds.
+   * **`gulp run --iot-hub`** - Run the gateway sample application and read IoT Hub messages that have just been sent from your gateway sample application.
+   * **`gulp run --table-storage`** - Run the gateway sample application and read IoT Hub messages that have been persisted in Azure Table storage.
