@@ -19,11 +19,22 @@ See [Lesson 4: Save messages to the cloud and read them from the cloud](#) for m
 ## Running this sample
 Please follow the [Lesson 4: Save messages to the cloud and read them from the cloud](#) for detailed walkthough of the steps below.
 
+### Create Azure Function application and storage account
+You should first create an azure storage account, and create your Azure Function application to save message from your IoT hub to your azure storage.
+
+1. Update the `arm-template-param.json`, replace `[your IoT Hub name]` with your IoT hub name.
+2. Deploy the resources to Azure by running the following command:
+
+   ```bash
+   az resource group deployment create --template-file arm-template.json --parameters @arm-template-param.json -g {resource group name}
+   ```
+
+
 ### Deploy and run
 1. **`npm install`** - Install the npm packages
 2. **`gulp init`** - Intialize config files in user's profile folder `%USERPROFILE%\.iot-hub-getting-started`
     - `config-gateway.json`: Configuration for connecting to gateway via SSH.
-    - `config-sensortag.json`: Configuration for the SensorTag and BLE sample application in the Gateway SDK.
+    - `config-sensortag.json`: Configuration for sample application in the Gateway SDK and your TI SensorTag(if you have a one).
     - `config-azure.json`: Configuration for your Azure IoT Hub and Azure Table storage account.
 3. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
@@ -37,6 +48,7 @@ Please follow the [Lesson 4: Save messages to the cloud and read them from the c
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-azure.json
    ```
-4. **`gulp run`** - Configure and run the BLE sample application. This application will exit in 40 seconds.
-   **`gulp run --iot-hub`** - Run the BLE sample application and read IoT Hub messages that have just been sent from SensorTag.
-   **`gulp read --table-storage`** - Run the BLE sample application and read IoT Hub messages that have been persisted in Azure Table storage.
+4. Run the sample application and read message from cloud
+   * **`gulp run`** - Configure and run the gateway sample application. This application will exit in 40 seconds.
+   * **`gulp run --iot-hub`** - Run the gateway sample application and read IoT Hub messages that have just been sent from your gateway sample application.
+   * **`gulp run --table-storage`** - Run the gateway sample application and read IoT Hub messages that have been persisted in Azure Table storage.
