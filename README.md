@@ -14,7 +14,7 @@ Placeholder for published GW Happy Path Tutorial
 
 ## What you need
 * Set up your Intel NUC as an IoT gateway (Lesson [Set up Intel NUC as an IoT gateway](#))
-* Install Nessary tools on your host machine (Lesson [Get the tools](#))
+* Install necessary tools on your host machine (Lesson [Get the tools](#))
 * Create your Azure IoT hub and register a logical device (Lesson [Create your Azure IoT hub and register SensorTag](#))
 
 ## File hierarchy

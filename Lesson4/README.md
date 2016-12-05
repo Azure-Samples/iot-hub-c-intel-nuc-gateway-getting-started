@@ -34,7 +34,7 @@ You should first create an azure storage account, and create your Azure Function
 1. **`npm install`** - Install the npm packages
 2. **`gulp init`** - Intialize config files in user's profile folder `%USERPROFILE%\.iot-hub-getting-started`
     - `config-gateway.json`: Configuration for connecting to gateway via SSH.
-    - `config-sensortag.json`: Configuration for sample application in the Gateway SDK and your physical SensorTag(if you have a one).
+    - `config-sensortag.json`: Configuration for sample application in the Gateway SDK and your TI SensorTag(if you have a one).
     - `config-azure.json`: Configuration for your Azure IoT Hub and Azure Table storage account.
 3. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
