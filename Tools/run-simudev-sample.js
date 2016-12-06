@@ -15,8 +15,15 @@ function run(configPath, timeout) {
   process.env['SSL_CERT_FILE'] = '/etc/ssl/certs/ca-certificates.crt';
   // run sample
   var ps = spawn('./' + simulateConfig.sampleBinary, [configPath], {
-    stdio: ['pipe', 'ignore', process.stderr]
+    stdio: ['pipe', 'pipe', process.stderr]
   });
+
+  ps.stdout.on('data', (data) => {
+    var message = data.toString().replace(/Press return to exit the application.\s*/g, '');
+    message = message.replace(/\r\n/g, '\n');
+    message = message.replace(/\n/g, '');
+    console.log(message);
+  })
 
   var isTerminate = false;
 

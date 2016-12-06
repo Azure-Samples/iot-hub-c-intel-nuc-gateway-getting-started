@@ -45,8 +45,8 @@ GatewayConfig.prototype.removeModules = function(name) {
   }
 }
 
-GatewayConfig.prototype.addLinks = function(links) {
-  this.config.links.push(links);
+GatewayConfig.prototype.addLinks = function (links) {
+  this.config.links = this.config.links.concat(links);
 }
 
 GatewayConfig.prototype.setLink = function(links) {

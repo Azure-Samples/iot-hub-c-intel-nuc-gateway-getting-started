@@ -57,6 +57,9 @@ function createConfig(options, callback) {
   }, {
     source: 'mapping',
     sink: 'IotHub'
+  }, {
+    source: 'IotHub',
+    sink: 'mapping'
   }]);
 
   // the ble can be mutilple parts, and all of them should map in the mapping module
@@ -91,14 +94,20 @@ function createConfig(options, callback) {
 
     // add the physical module for this device, which define the instruction will send to SensorTag
     var bleModule = util.clone(ble);
-    bleModule.args.macAddress = macAddress;
+    bleModule.args = {
+      macAddress: macAddress,
+      messagePeriod: 2000
+    }
     bleModule.name = name;
 
     gatewayConfig.addModule(bleModule);
-    gatewayConfig.addLinks({
+    gatewayConfig.addLinks([{
       source: name,
       sink: 'mapping'
-    });
+    }, {
+      source: 'mapping',
+      sink: name
+    }]);
   }
 
   var dstFile = options.isLocal ? SAMPLE_CONFIG : path.join(SAMPLE_PATH, SAMPLE_CONFIG);
