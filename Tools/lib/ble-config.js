@@ -100,7 +100,7 @@ function createConfig(options, callback) {
       // if there are more than one sensortags, it should have a unique name and add the link mapping
       var moduleName = 'SensorTag' + i;
       sensortagModule['name'] = moduleName;
-      gatewayConfig.addLinks.push({
+      gatewayConfig.addLinks([{
         'source': moduleName,
         'sink': 'mapping'
       }, {
@@ -109,7 +109,7 @@ function createConfig(options, callback) {
       }, {
         'source': 'BLEC2D',
         'sink': moduleName
-      });
+      }]);
     }
     gatewayConfig.addModule(sensortagModule);
   }

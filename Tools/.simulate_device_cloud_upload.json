@@ -44,7 +44,8 @@
         }
       },
       "args": {
-        "macAddress": "01:01:01:01:01:01"
+        "macAddress": "01:01:01:01:01:01",
+        "messagePeriod": 2000
       }
     },
     {
