@@ -27,12 +27,10 @@ function initTasks(gulp) {
         'IoT_hub_suffix': 'azure-devices.net',
         'devices': [{
           'iot_device_connection_string': '[IoT device connection string]',
-          'BLE_mac_address': '[SensorTag mac address]'
         }]
       },
       'azure-config': {
         'iot_hub_connection_string': '[IoT Hub connection string]',
-        'iot_device_connection_string': '[IoT device connection string]',
         'azure_storage_connection_string': '[Azure storage connection string]',
         'iot_hub_consumer_group_name': '$Default'
       }
