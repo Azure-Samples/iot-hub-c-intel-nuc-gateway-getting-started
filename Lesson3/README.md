@@ -1,8 +1,8 @@
 # Configure and run the BLE sample application to receive data from BLE SensorTag
-This sample repo accompanies [Lesson 3: Configure and run the BLE sample application to receive data from BLE SensorTag](#) lesson. You will use scripts to automate the configuration and execution of the BLE sample application on your gateway device. The scripts will also read device-to-cloud messages from IoT Hub and Azure table storage.
+This sample repo accompanies [Configure and run the BLE sample application to receive data from BLE SensorTag](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson3-configure-ble-app) lesson and [Configure and run a simulated device sample app](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-sim-lesson3-configure-simulated-device-app). You will use scripts to automate the configuration and execution of the BLE sample application or simulated device sample on your gateway device. The scripts will also read device-to-cloud messages from IoT Hub and Azure table storage.
 
 ## Prerequisites
-See [Lesson 3: Configure and run the BLE sample application to receive data from BLE SensorTag](#) for more information.
+See associate lesson for more information.
 
 ## Repository information
 ``` txt
@@ -11,13 +11,11 @@ See [Lesson 3: Configure and run the BLE sample application to receive data from
 |- ble-message-printer.js     // Sample script for automation of BLE sample application's data decoder and printer
 ```
 
-## Running this sample
-
-Please follow the [Lesson 3: Configure and run the BLE sample application to receive data from BLE SensorTag](#) for detailed walkthough of the steps below.
-
-### Deploy and run BLE sample
+## Deploy and run BLE sample
 
 > If you don't have TI SensorTag on hands, you can go to [Deploy and run simulate device cloud upload sample](#run-simudev)
+
+Please follow the [Configure and run the BLE sample application to receive data from BLE SensorTag](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson3-configure-ble-app) for detailed walkthough of the steps below.
 
 1. **`npm install`** - Install the npm packages
 2. **`gulp init`** - Intialize configuration files in user's profile folder `%USERPROFILE%\.iot-hub-getting-started`
@@ -65,6 +63,9 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
 10. **`gulp run --iot-hub`** - Run the BLE sample application and read IoT Hub messages that have just been sent from SensorTag.
 
 ## <a id="run-simudev"></a>Deploy and run simulate device cloud upload sample
+
+Please follow the [Configure and run a simulated device sample app](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-sim-lesson3-configure-simulated-device-app) for detailed walkthough of the steps below.
+
 1. Use the following command to modify your configuration, change the `"has_sensortag"` value from `true` to `false`.
 
    ```bash
@@ -98,7 +99,7 @@ Please follow the [Lesson 3: Configure and run the BLE sample application to rec
    # For MacOS or Ubuntu
    code ~/.iot-hub-getting-started/config-sensortag.json
    ```
-<!-- 7. **`gulp run`** - Configure and run the simulate device cloud upload sample application. This application will exit in 40 seconds. -->
+7. **`gulp run`** - Configure and run the simulate device cloud upload sample application. This application will exit in 40 seconds.
 8. Use az to get IoT Hub connection string, device connection string and azure storage connection string and edit IoT Hub connection string and device connection string in config-azure.json.
    ``` bash
    # Get IoT hub connection string
