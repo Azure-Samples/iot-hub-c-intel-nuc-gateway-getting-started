@@ -1,8 +1,8 @@
 # Save messages to the cloud and read them from the cloud
-This sample repo accompanies [Lesson 4: Save messages to the cloud and read them from the cloud](#) lesson. It demonstrates how to use Azure function app to receive incoming IoT hub messages and persist them to Azure table storage.
+This sample repo accompanies [Save messages to the cloud and read them from the cloud](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson4-deploy-resource-manager-template) lesson. It demonstrates how to use Azure function app to receive incoming IoT hub messages and persist them to Azure table storage.
 
 ## Prerequisites
-See [Lesson 4: Save messages to the cloud and read them from the cloud](#) for more information.
+See [Lesson 4: Save messages to the cloud and read them from the cloud](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson4-deploy-resource-manager-template) for more information.
 
 ## Repository information
 ``` txt
@@ -17,7 +17,7 @@ See [Lesson 4: Save messages to the cloud and read them from the cloud](#) for m
 ```
 
 ## Running this sample
-Please follow the [Lesson 4: Save messages to the cloud and read them from the cloud](#) for detailed walkthough of the steps below.
+Please follow the [Save messages to the cloud and read them from the cloud](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson4-deploy-resource-manager-template) for detailed walkthough of the steps below.
 
 ### Create Azure Function application and storage account
 You should first create an azure storage account, and create your Azure Function application to save message from your IoT hub to your azure storage.
