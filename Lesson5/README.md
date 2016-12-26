@@ -58,7 +58,7 @@ These steps will guide you compile the Azure gateway SDK's hello_world module on
 
 Please follow the [Compile and run Azure gateway SDK module and sample application](#) for detailed walkthough of the steps below.
 
-1. Modify the `config.json` as follow sample. This configuration specific `workspace` folder in your host machine should be transfered to your Intel NUC's `~/<deploy_path>` when compiling.
+1. Modify the `config.json` as the following sample configuration. This configuration specific `workspace` folder in your host machine should be transfered to your Intel NUC's `~/<deploy_path>` when compiling.
 
    ``` json
    "workspace": "./module/hello_world",
@@ -67,7 +67,7 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
 
 2. **`gulp compile`** - Ship the module source code to your Intel NUC and run build.sh to compile it.
 
-3. **`gulp modules --list`** - List all avaliable Azure gateway SDK module binary on your Intel NUC. You should find the binary you compiled in step 2 is in `/root/gateway_sample/module/hello_world/build/libhello_world.so` if you haven't change the login username in `config-gateway.json`.
+3. **`gulp modules --list`** - List all avaliable Azure gateway SDK module binary on your Intel NUC. You should find the binary you compiled in step2 is in `/root/gateway_sample/module/hello_world/build/libhello_world.so` if you haven't change the login username in `config-gateway.json`.
 
    > `gulp modules --list` will find all .so file on your Intel NUC under specific folders (we call them feeds), you can use the following command to configure the feeds:
    >
@@ -76,7 +76,7 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
    > * `gulp modules --list` - List all modules under specific folder on your Intel NUC
    > * `gulp modules --rm-feed <path>` - Remove a folder path from the feeds
 
-4. Use the following command to modify the `hello_world` sample application's json file. Replace the `hello_world` module's `module.path` value to the path you obstain in step3.
+4. Use the following command to modify the `hello_world` sample application's json file. Replace the `hello_world` module's `module.path` value to the path you obtained in step3.
 
    ``` bash
    # For Windows command prompt
