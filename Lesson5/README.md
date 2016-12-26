@@ -70,10 +70,11 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
 3. **`gulp modules --list`** - List all avaliable Azure gateway SDK module binary on your Intel NUC. You should find the binary you compiled in step 2 is in `/root/gateway_sample/module/hello_world/build/libhello_world.so` if you haven't change the login username in `config-gateway.json`.
 
    > `gulp modules --list` will find all .so file on your Intel NUC under specific folders (we call them feeds), you can use the following command to configure the feeds:
-   `gulp modules --add-feed <path>` - Add a folder's absolute path to the feeds
-   `gulp modules --feeds` - Show all specific folders on your Intel NUC, --list will list modules under these folders
-   `gulp modules --list` - List all modules under specific folder on your Intel NUC
-   `gulp modules --rm-feed <path>` - Remove a folder path from the feeds
+   >
+   > * `gulp modules --add-feed <path>` - Add a folder's absolute path to the feeds
+   > * `gulp modules --feeds` - Show all specific folders on your Intel NUC, --list will list modules under these folders
+   > * `gulp modules --list` - List all modules under specific folder on your Intel NUC
+   > * `gulp modules --rm-feed <path>` - Remove a folder path from the feeds
 
 4. Use the following command to modify the `hello_world` sample application's json file. Replace the `hello_world` module's `module.path` value to the path you obstain in step3.
 
