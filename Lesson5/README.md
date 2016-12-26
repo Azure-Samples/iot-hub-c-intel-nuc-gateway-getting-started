@@ -26,6 +26,8 @@ See associate lesson for more information.
 
 ## Compile and run hello_world sample
 
+These steps will guide you compile the Azure gateway SDK's hello_world sample application on your Intel NUC. This sample application creates a gateway from hello_world.json file and use two modules in Azure IoT gateway SDK to log a "hello world" message to a file every 5 seconds.
+
 Please follow the [Compile and run Azure gateway SDK module and sample application](#) for detailed walkthough of the steps below.
 
 1. **`npm install`** - Install the npm packages
@@ -48,11 +50,11 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
 
 4. **`gulp compile`** - Ship the sample source code to your Intel NUC and run build.sh to compile it.
 
-5. **`gulp run`** - Run [`../Tools/run-hello-world.js`](../Tools/run-hello-world.js) which it specific in [`../config.json`](../config.json) on your Intel NUC to start the hello world application. 
+5. **`gulp run`** - Run [`../Tools/run-hello-world.js`](../Tools/run-hello-world.js) which is configured in [`config.json`](config.json) to start the hello_world sample application on your Intel NUC. 
 
 ## Compile the hello_world module and run hello_world sample to use the new module
 
-This step will compile the Azure gateway SDK's hello_world module on your Intel NUC. The module's source code is in the `module/hello_world/` folder. In the `hello_world.c`, it add a line `printf("%d: %s\n", ++count, HELLOWORLD_MESSAGE);` to print the message before send it out.
+These steps will guide you compile the Azure gateway SDK's hello_world module on your Intel NUC. The module's source code is in the `module/hello_world/` folder. In the `hello_world.c`, it add a line `printf("%d: %s\n", ++count, HELLOWORLD_MESSAGE);` to print the message before send it out.
 
 Please follow the [Compile and run Azure gateway SDK module and sample application](#) for detailed walkthough of the steps below.
 
@@ -83,4 +85,4 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
    code sample/hello_world/src/hello_world.json
    ```
 
-5. **`gulp run --config sample/hello_world/src/hello_world.json`** - run the hello_world sample application use the specific gateway json file.
+5. **`gulp run --config sample/hello_world/src/hello_world.json`** - run the hello_world sample application, the `--config` parameter force the `run-hello-world.js` script run with json file you provided.
