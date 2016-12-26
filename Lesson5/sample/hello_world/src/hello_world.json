@@ -1,0 +1,32 @@
+{
+  "modules": [
+    {
+      "name": "logger",
+      "loader": {
+        "name": "native",
+        "entrypoint": {
+          "module.path": "/usr/lib/azureiot/modules/logger/liblogger.so"
+        }
+      },
+      "args": {
+        "filename": "log.txt"
+      }
+    },
+    {
+      "name": "hello_world",
+      "loader": {
+        "name": "native",
+        "entrypoint": {
+          "module.path": "/root/gateway_sample/module/hello_world/build/libhello_world.so"
+        }
+      },
+      "args": null
+    }
+  ],
+  "links": [
+    {
+      "source": "hello_world",
+      "sink": "logger"
+    }
+  ]
+}
