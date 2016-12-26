@@ -34,22 +34,33 @@ function run(configPath, timeout) {
     }
   }
 
-  setTimeout(() => {
-    ps.stdin.write('\r\n');
-  }, timeout);
+  if (timeout) {
+    setTimeout(() => {
+      ps.stdin.write('\r\n');
+    }, timeout);
+  }
 
   process.on('SIGINT', terminate);
   process.on('SIGTERM', terminate);
   process.on('exit', terminate);
 }
 
-(function(timeout) {
-  timeout = timeout || 40000;
-  simulateConfig.create({}, (stdout, error) => {
-    if(error) {
-      util.errorHandler(error);
+(function(timeout, config) {
+  new Promise((resolve, reject) => {
+    if (!config) {
+      simulateConfig.create({}, (stdout, error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(stdout);
+        }
+      });
     } else {
-      run(stdout, timeout);
+      resolve(process.cwd() + '/' + config);
     }
-  });
-})(process.argv[2]);
+  })
+  .then((path) => {
+    run(path, timeout)
+  })
+  .catch(util.errorHandler);
+})(process.argv[2], process.argv[3]);

@@ -62,11 +62,10 @@ function testDevicesConnectivities(devices, allSuccess, onceFail) {
     .catch(onceFail);
 }
 
-(function(timeout) {
-  timeout = timeout || 40000;
+(function(timeout, config) {
   // Step1. Preparation
   Promise.all([
-    // check binary exists
+      // check binary exists
     new Promise((resolve, reject) => {
       var binaryPath = bleConfig.samplePath + bleConfig.sampleBinary;
       fs.exists(binaryPath, (exists) => {
@@ -79,13 +78,17 @@ function testDevicesConnectivities(devices, allSuccess, onceFail) {
     }),
     // create config
     new Promise((resolve, reject) => {
-      bleConfig.create({}, (stdout, error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(stdout);
-        }
-      });
+      if (!config) {
+        bleConfig.create({}, (stdout, error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(stdout);
+          }
+        });
+      } else {
+        resolve(process.cwd() + '/' + config);
+      }
     }),
     // test connectivity
     new Promise((resolve, reject) => {
@@ -108,4 +111,4 @@ function testDevicesConnectivities(devices, allSuccess, onceFail) {
     }
   })
   .catch(util.errorHandler);
-})(process.argv[2]);
+})(process.argv[2], process.argv[3]);
