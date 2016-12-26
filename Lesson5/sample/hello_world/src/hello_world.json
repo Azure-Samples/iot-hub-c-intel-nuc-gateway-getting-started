@@ -17,7 +17,7 @@
       "loader": {
         "name": "native",
         "entrypoint": {
-          "module.path": "/root/gateway_sample/module/hello_world/build/libhello_world.so"
+          "module.path": "/usr/lib/azureiot/modules/hello_world/libhello_world.so"
         }
       },
       "args": null

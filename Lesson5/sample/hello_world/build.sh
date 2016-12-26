@@ -3,7 +3,7 @@ build_root=$(cd "$(dirname "$0")" && pwd)
 build_dir="$build_root"/build
 output_name=hello_world
 
-rm -f "$build_dir"/"$output_name"
+rm -rf "$build_dir"
 mkdir -p "$build_dir"
 
 # Check for Azure IoT Gateway SDK headers
