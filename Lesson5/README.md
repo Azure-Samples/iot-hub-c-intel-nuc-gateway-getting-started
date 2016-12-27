@@ -2,7 +2,7 @@
 This sample accompanies [Compile and run Azure gateway SDK module and sample application](#) lesson. You will use scripts to compile the Azure gateway SDK's module and sample application yourself.
 
 ## Prerequisites
-See associate lesson for more information.
+See the associate lesson.
 
 ## Repository information
 
@@ -26,7 +26,7 @@ See associate lesson for more information.
 
 ## Compile and run hello_world sample
 
-These steps will guide you compile the Azure gateway SDK's hello_world sample application on your Intel NUC. This sample application creates a gateway from hello_world.json file and use two modules in Azure IoT gateway SDK to log a "hello world" message to a file every 5 seconds.
+These steps will guide you through compilation of Azure gateway SDK's hello_world sample application on your Intel NUC. This sample application creates a gateway from hello_world.json file which includes two modules. The gateway logs "hello world" message every 5 seconds.
 
 Please follow the [Compile and run Azure gateway SDK module and sample application](#) for detailed walkthough of the steps below.
 
@@ -35,7 +35,7 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
 2. **`gulp init`** - Intialize configuration files in user's profile folder `%USERPROFILE%\.iot-hub-getting-started`
 
    * `config-gateway.json`: Configuration for connecting to gateway via SSH.
-   * `config-sensortag.json`: Configuration for the sensor will be connected to gateway, which will be send to your Intel NUC.
+   * `config-sensortag.json`: Configuration for the sensor connected to gateway. The file will be sent to your Intel NUC.
    * `config-azure.json`: Configuration for your Azure IoT Hub and Azure Table storage account.
 
 3. Use the following command to modify your gateway configuration files, fill in the gateway's mac address
@@ -54,7 +54,7 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
 
 ## Compile the hello_world module and run hello_world sample to use the new module
 
-These steps will guide you compile the Azure gateway SDK's hello_world module on your Intel NUC. The module's source code is in the `module/hello_world/` folder. In the `hello_world.c`, it add a line `printf("%d: %s\n", ++count, HELLOWORLD_MESSAGE);` to print the message before send it out.
+These steps will guide you through compilation of Azure gateway SDK's hello_world module on your Intel NUC. The module's source code is in the `module/hello_world/` folder. In the `hello_world.c`, it add a line `printf("%d: %s\n", ++count, HELLOWORLD_MESSAGE);` to print the message before send it out.
 
 Please follow the [Compile and run Azure gateway SDK module and sample application](#) for detailed walkthough of the steps below.
 
