@@ -1,7 +1,7 @@
 {
   "name": "iot-hub-c-intel-nuc-gateway-getting-started",
   "version": "1.0.0",
-  "description": "scripts for getting started with Azure IoT Gateway SDK BLE sample",
+  "description": "scripts for compile and run gateway sample code on Intel NUC device",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
@@ -13,12 +13,9 @@
   },
   "homepage": "https://github.com/Azure-Samples/iot-hub-c-intel-nuc-gateway-getting-started#readme",
   "devDependencies": {
-    "azure-event-hubs": "0.0.4",
-    "azure-storage": "^1.3.1",
     "get-gulp-args": "0.0.1",
     "gulp": "^3.9.1",
-    "gulp-common": "Azure/gulp-common.git#v0.12.8",
-    "moment": "^2.15.1",
+    "gulp-common": "github:azure/gulp-common#v0.12.8",
     "run-sequence": "^1.2.2"
   }
 }

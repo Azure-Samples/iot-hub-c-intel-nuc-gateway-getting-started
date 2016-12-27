@@ -1,0 +1,13 @@
+{
+  "workspace": "./sample/hello_world",
+  "deploy_path": "sample/hello_world",
+  "run": "run-hello-world.js",
+  "module_feeds": [
+    "~/gateway_sample/",
+    "/usr/share/azureiotgatewaysdk/",
+    "/usr/lib/azureiot/modules/"
+  ],
+  "include_feeds": [
+    "/usr/include/azureiot/"
+  ]
+}
