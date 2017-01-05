@@ -55,7 +55,6 @@ int helloWorldThread(void *param)
             }
             else
             {
-                int count = 0;
                 while (1)
                 {
                     if (Lock(handleData->lockHandle) == LOCK_OK)
@@ -67,7 +66,6 @@ int helloWorldThread(void *param)
                         }
                         else
                         {
-                            printf("%d: %s\n", ++count, HELLOWORLD_MESSAGE);
                             (void)Broker_Publish(handleData->broker, (MODULE_HANDLE)handleData, helloWorldMessage);
                             (void)Unlock(handleData->lockHandle);
                         }
