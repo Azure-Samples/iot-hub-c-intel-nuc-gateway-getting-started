@@ -1,7 +1,7 @@
 #!/bin/sh
 build_root=$(cd "$(dirname "$0")" && pwd)
 build_dir="$build_root"/build
-output_name=hello_world
+output_name=my_module
 
 rm -f "$build_dir"/"$output_name"
 mkdir -p "$build_dir"
@@ -13,7 +13,7 @@ if [ ! -f /usr/include/azureiot/gateway.h ]; then
 fi
 
 echo ---------- Building the Hello World Gateway SDK module ----------
-gcc -c -fPIC -std=c99 src/"$output_name".c -I/usr/include/azureiot -I/usr/include/azureiot/modules/common -Iinc -o "$build_dir"/"$output_name".o
+gcc -c -fPIC -std=c99 src/"$output_name".c -I/usr/include/azureiot -Iinc -o "$build_dir"/"$output_name".o
 [ $? -eq 0 ] || exit $?
 gcc -shared -Wl,-soname,lib"$output_name".so -o "$build_dir"/lib"$output_name".so "$build_dir"/"$output_name".o -lgateway -laziotsharedutil
 [ $? -eq 0 ] || exit $?
