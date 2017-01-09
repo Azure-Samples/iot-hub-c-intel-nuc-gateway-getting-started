@@ -53,8 +53,7 @@ Please follow the [Compile and run Azure gateway SDK module and sample applicati
 
 5. **`gulp run`** - Run [`../Tools/run-hello-world.js`](../Tools/run-hello-world.js) which is configured in [`config.json`](config.json) to start the hello_world sample application on your Intel NUC. 
 
-## Write and compile your own module and run hello_world sample to use the new module
-
+## Write and compile your own module and compile it on Intel NUC
 These steps will guide you write your own gateway module and compile it. Your own module can print out the message when receiving it. Please follow the [Compile and run Azure gateway SDK module and sample application](#) for detailed walkthough of the steps below.
 
 The `module/my_module` folder contains an Azure IoT gateway SDK module's code template. A module must implement the following interfaces:
