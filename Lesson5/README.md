@@ -74,7 +74,13 @@ pfModule_Start Module_Start;
    code module/my_module
    ```
    
-2. Fill the `MyModule_Receive` function with the following piece of code:
+2. Include the following two header file
+   ```c
+   #include <stdio.h>
+   #include "azure_c_shared_utility/xlogging.h"
+   ```
+   
+   Fill the `MyModule_Receive` function with the following piece of code:
 
    ```c
    if (message == NULL)
@@ -164,5 +170,7 @@ pfModule_Start Module_Start;
       "sink": "my_module"
     }
    ```
+   
+   Make sure your `hello_world.json` still be a valid json file and then save it.
 
 3. **`gulp run --config sample/hello_world/src/hello_world.json`** - run the hello_world sample application, the `--config` parameter force the `run-hello-world.js` script run with json file you provided.
