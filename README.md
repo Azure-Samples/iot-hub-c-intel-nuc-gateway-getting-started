@@ -31,10 +31,12 @@ This repo contains the sample codes to help you run the azure-iot-gateway-sdk BL
 |  |- deploy.js                  // Create sample config
 |  |- discover-sensortag.js      // Discover availiable sensortag
 |  |- run-ble-sample.js          // Create ble_gateway config and run the sample for 40 seconds
+|  |- run-hello-world.js         // Create hello_world config and run the sample for 40 seconds
 |  |- run-simudev-sample.js      // Create simulate_device_cloud_upload config and run the sample for 40 seconds
 |  |- test-connectivity.js       // Test a MAC address' connectivity and show user the result
 |- Lesson3/                      // Lesson3: Send messages to and read messages from IoT hub
 |- Lesson4/                      // Lesson4: Save messages to the Azure storage
+|- Lesson5/                      // Lesson5: Write and compile your own gateway module
 ```
 
 ## Starter Kit
