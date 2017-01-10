@@ -2,9 +2,7 @@
  * IoT Gateway BLE Script - Microsoft Sample Code - Copyright (c) 2016 - Licensed MIT
  */
 
-#include <stdio.h>
 #include "module.h"
-#include "azure_c_shared_utility/xlogging.h"
 
 void* MyModule_ParseConfigurationFromJson(const char* configuration)
 {
