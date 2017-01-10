@@ -74,7 +74,7 @@ pfModule_Start Module_Start;
    code module/my_module
    ```
    
-2. Include the following two header file
+2. Include the following two header files
    ```c
    #include <stdio.h>
    #include "azure_c_shared_utility/xlogging.h"
