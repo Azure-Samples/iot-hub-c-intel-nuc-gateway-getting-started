@@ -15,7 +15,7 @@
   "devDependencies": {
     "get-gulp-args": "0.0.1",
     "gulp": "^3.9.1",
-    "gulp-common": "github:azure/gulp-common#v0.12.8",
+    "gulp-common": "github:azure/gulp-common#v0.12.14",
     "run-sequence": "^1.2.2"
   }
 }
