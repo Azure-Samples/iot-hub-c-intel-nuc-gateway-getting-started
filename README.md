@@ -1,8 +1,14 @@
+---
+services: iot-hub
+platforms: c
+author: xshi
+---
+
 # iot hub c intel nuc gateway getting started
 This repo contains the sample codes to help you run the azure-iot-gateway-sdk BLE sample application on Intel NUC with TI SensorTag. There are also sample codes for reading messages directly from IoT Hub as well as Azure table storage where IoT Hub messages were persisted by Azure function.
 
-* [Get started with IoT Gateway Starter Kit with a SensorTag](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-get-started)
-* [Get started with IoT Gateway Starter Kit with a simulated device](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-sim-get-started)
+* [Get started with IoT Gateway Starter Kit with a SensorTag](https://docs.microsoft.com/azure/iot-hub/iot-hub-gateway-kit-c-get-started)
+* [Get started with IoT Gateway Starter Kit with a simulated device](https://docs.microsoft.com/azure/iot-hub/iot-hub-gateway-kit-c-sim-get-started)
 
 ## The following scripts will help you
 * Device discovery for sensortag devices
@@ -12,8 +18,8 @@ This repo contains the sample codes to help you run the azure-iot-gateway-sdk BL
 * Receive messages from your Azure Table storage
 
 ## What you need
-* Set up your Intel NUC as an IoT gateway (Lesson [Set up Intel NUC as an IoT gateway](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson1-set-up-nuc))
-* Install necessary tools on your host machine (Lesson [Get the tools](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson2-get-the-tools-win32))
+* Set up your Intel NUC as an IoT gateway (Lesson [Set up Intel NUC as an IoT gateway](https://docs.microsoft.com/azure/iot-hub/iot-hub-gateway-kit-c-lesson1-set-up-nuc))
+* Install necessary tools on your host machine (Lesson [Get the tools](https://docs.microsoft.com/azure/iot-hub/iot-hub-gateway-kit-c-lesson2-get-the-tools-win32))
 * Create your Azure IoT hub and register a logical device (Lesson [Create your Azure IoT hub and register SensorTag](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-gateway-kit-c-lesson2-register-device))
 
 ## File hierarchy
